@@ -22,7 +22,7 @@ DB_PASSWORD=123456
 
 - データシーダー(任意)
 ```
-# create sample user with username and password: admin || 123455
+# create sample user with username and password: admin || 12345678
 php artisan db:seed --class=UsersTableSeeder
 
 # create area and provinces
@@ -31,3 +31,6 @@ php artisan db:seed --class=AreaAndProvince
 # create sample events
 php artisan db:seed --class=EventsSeeder
 ```
+
+### デモページ
+1. ホームページ
