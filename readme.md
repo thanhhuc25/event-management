@@ -33,4 +33,7 @@ php artisan db:seed --class=EventsSeeder
 ```
 
 ### デモページ
-1. ホームページ
+ホームページ
+![Alt text](public/images/home.png?raw=true "Home page")
+      
+    
