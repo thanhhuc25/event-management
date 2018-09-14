@@ -38,3 +38,6 @@ php artisan db:seed --class=EventsSeeder
       
 管理ページ
 ![Alt text](public/images/admin.png?raw=true "Admin page")
+
+イベント編集ページ
+![Alt text](public/images/event-edit.png?raw=true "Event edit page")
