@@ -36,4 +36,5 @@ php artisan db:seed --class=EventsSeeder
 ホームページ
 ![Alt text](public/images/home.png?raw=true "Home page")
       
-    
+管理ページ
+![Alt text](public/images/admin.png?raw=true "Admin page")
