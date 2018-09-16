@@ -28,6 +28,9 @@ php artisan db:seed --class=UsersTableSeeder
 # create area and provinces
 php artisan db:seed --class=AreaAndProvince
 
+# create 2 categories: ホームセンター, その他
+php artisan db:seed --class=CategoriesTableSeeder
+
 # create sample events
 php artisan db:seed --class=EventsSeeder
 ```
