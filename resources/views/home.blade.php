@@ -1,33 +1,73 @@
 <!DOCTYPE html>
-<html lang="ja">
+<html>
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>{{"イベント情報"}}</title>
-    <link href="{{asset("css/bootstrap-grid.min.css")}}" rel="stylesheet">
-    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-    <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-    <![endif]-->
+    <meta name="viewport" content="width=device-width">
+    <meta name="format-detection" content="telephone=no">
+
+    <title>イベント情報</title>
+
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+
+    <!-- OGP -->
+    <meta property="og:locale" content="ja_JP">
+    <meta property="og:title" content="">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="">
+    <meta property="og:image" content="">
+    <meta property="og:site_name" content="">
+    <meta property="og:description" content="">
+
+    <!-- Can not edit for framework. -->
+    <link href="{{asset("css/common/css/fw.css")}}" rel="stylesheet">
+
+    <!-- Can not edit for module. -->
+    <link href="{{asset("css/common/css/module.css")}}" rel="stylesheet">
+
+    <!-- Please set appropriate font for each country. -->
+    <link href="{{asset("css/common/css/font.css")}}" rel="stylesheet">
+
+    <!-- Please create a css file for each page. -->
+    <!-- <link href="/common/css/page/***.css" rel="stylesheet"> -->
+
     <link href="{{asset("css/index.css")}}" rel="stylesheet">
+
+
 </head>
-<body>
-<noscript>
-    <div style="text-align: center">JavaScriptを有効にしてください</div>
-</noscript>
-<div class="no-print">
-    <div class="container">
-        <div class="row">
-            <div class="col-xs-12">
-                <h1 class="center h1">
-                    イベント情報
-                </h1>
-                <div class="row">
-                    <div class="col-xs-12 col-md-3 col-md-offset-3">
-                        <div class="">
+
+<body class="fw">
+
+
+<header id="header" >
+    <div class="header-bar">
+
+        <a title="ホームページ" href="{{url("/")}}" class="header-logo"><img src="{{asset("css/common/images/common/logo/logo.png")}}" alt="HIKOKI"></a>
+
+    </div>
+
+</header>
+<!-- /#header -->
+
+<h1 class="a-ttl_bgimg a-ttl_h1 no-print" style="background-image:url({{asset("css/common/images/banner.jpg")}});">
+</h1>
+<section class="f-section no-print">
+    <h2 class="a-ttl_h2 a-ttl_border a-ttl_border_bg a-ttl_main">
+        HiKOKIイベント情報
+        <span class="a-ttl_txt">マルチボルト製品など話題の新製品是非ご体験ください</span>
+    </h2>
+</section>
+
+<div id="container" class="no-print">
+
+    <div class="f-inner">
+
+        <main id="contents" class="f-max">
+            <div class="f-section f-section--home">
+                <ul class="m-list_box f-flex f-flex_mb30">
+                    <li class="f-flex4 f-flex12_s">
+                        <div class="bg-white">
                             <label>
                                 {{"エリア"}}
                             </label>
@@ -40,10 +80,9 @@
                                 @endforeach
                             </select>
                         </div>
-
-                    </div>
-                    <div class="col-xs-12 col-md-3">
-                        <div class="">
+                    </li>
+                    <li class="f-flex4 f-flex12_s">
+                        <div class="bg-white">
                             <label>
                                 {{"都道府県"}}
                             </label>
@@ -56,12 +95,9 @@
                                 @endforeach
                             </select>
                         </div>
-
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-xs-12 col-md-6 col-md-offset-3">
-                        <div class="cat">
+                    </li>
+                    <li class="f-flex4 f-flex12_s">
+                        <div class="bg-white">
                             <label>
                                 {{"カテゴリー"}}
                             </label>
@@ -74,45 +110,50 @@
                                 @endforeach
                             </select>
                         </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-xs-12 col-md-8 col-md-offset-2">
-                        <div class="res" id="res">
-                            @foreach($events as $event)
-                                @include('partial._event', [
-                                      'event'=>$event
-                                ])
-                            @endforeach
-                        </div>
-                    </div>
-                </div>
+                    </li>
+                </ul>
             </div>
-        </div>
-    </div>
-    <!--modal-->
-    <div id="myModal" class="modal-s">
-        <!-- Modal content -->
-        <div class="modal-s-content">
-            <span class="close-s">&times;</span>
-            <div id="print-content">
-                <div class="container" style="width: 100%; padding-bottom: 10px">
+            <div class="res" id="res">
+                @foreach($events as $event)
+                    @include('partial._event', [
+                          'event'=>$event
+                    ])
+                @endforeach
+            </div>
 
-                </div>
-            </div>
-        </div>
+        </main>
+        <!-- /#contents -->
+
     </div>
+
 </div>
-
-<div class="print-me">
+<!--print-->
+<div class="print-me" >
     <div class="container" >
 
     </div>
-    <div class="center">
-        <img style="width: 80%; margin: auto" id="map-img"
+    <div class="center print-pd-right">
+        <img style="width: 100%; max-width: 100%; margin: auto" id="map-img"
              src="">
     </div>
 </div>
+
+<!-- /#container -->
+<footer id="footer" class="no-print">
+    <div class="footer-bottom footer-section">
+        <div class="f-inner">
+            <p class="footer-copyright">&copy; Koki Holdings Co., Ltd. All rights reserved.</p>
+        </div>
+    </div>
+    <!-- /.footer-bottom -->
+</footer>
+<!-- /footer -->
+
+<!-- Can not edit for module. -->
+{{--<script src="./common/js/main.js"></script>--}}
+
+<!-- Please create a javascript file for each page. -->
+<!-- <script src="/common/js/***.js"></script> -->
 
 <script src="{{asset("js/jquery.min.js")}}"></script>
 <script>
@@ -125,8 +166,8 @@
             $.ajax({
                 url: "{{route('search')}}?category="+_cat + "&province="+_province+"&area="+_area
             }).done(function (data) {
-               var $_html = $(data);
-               $("#res").html($_html.find("#res").html());
+                var $_html = $(data);
+                $("#res").html($_html.find("#res").html());
             });
         }
         $("#area").change(function () {
@@ -164,7 +205,9 @@
 
         });
 
+
     });
 </script>
 </body>
+
 </html>

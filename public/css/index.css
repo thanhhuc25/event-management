@@ -1,9 +1,8 @@
 .center{
     text-align: center;
 }
-.h1{
-    border-bottom: 1px solid #ccc;
-    padding-bottom: 10px;
+h1{
+    margin: 0;
 }
 .sl{
     height: 50px;
@@ -18,8 +17,9 @@ label{
     padding: 20px 0;
 }
 .res{
-    border-radius: 4px;
-    border: 1px solid #ccc;
+    /*border-radius: 4px;*/
+    /*border: 1px solid #ccc;*/
+    margin-top: 50px;
 }
 .item{
     border-bottom: 1px solid #ccc;
@@ -38,47 +38,6 @@ label{
     margin: auto;
     max-width: 100%;
     width: 200px;
-}
-.btn-map{
-    font-size: 11px;
-    display: inline-block;
-    color: rgba(255,255,255,1.00);
-    background-color: rgba(0,0,0,1.00);
-    text-align: center;
-    padding: 8px 35px;
-}
-.btn-map:hover, .btn-map:focus{
-    color: rgba(255,255,255,1.00);
-    cursor: pointer;
-}
-.btn-print{
-    font-size: 11px;
-    display: inline-block;
-    color: #fff;
-    background-color: #337ab7;
-    border-color: #2e6da4;
-    text-align: center;
-    padding: 8px 35px;
-}
-body{
-    padding-bottom: 40px;
-    background-color: rgba(41,155,149,1.00);
-}
-.container{
-    background: #fff;
-    border-radius: 5px;
-    margin-top: 20px;
-    margin-bottom: 20px;
-    padding-bottom: 50px;
-}
-@media screen and (max-width:980px){
-    .container{
-        background: #fff;
-        border-radius: 0;
-        margin-top: 0;
-        margin-bottom: 0;
-        padding-bottom: 0;
-    }
 }
 .border-b{
     border-bottom: 3px solid rgba(45,163,190,1.00);
@@ -161,19 +120,45 @@ body{
     opacity: 0;
 }
 .no-print{
-    min-height: 500px;
+    /*min-height: 500px;*/
 }
 @media print{
     .no-print{
-        display: none;
+        display: none !important;
+        min-height: 0;
     }
     .print-me{
         position: static;
         opacity: 1;
     }
-    @page { margin: 0; }
+    .a-ttl_h2{
+        border-top: none !important;
+        padding-left: 0 !important;
+    }
+    .print-pd-right {
+        padding-right: 10px !important;
+    }
+    /*@page { margin: 0; }*/
     body { margin: 1.0cm; }
 }
 @page  {
     size: A4;
+}
+.item-x{
+    margin-bottom: 40px;
+}
+.f-section--home {
+    padding-top: 30px !important;
+}
+.bg-white{
+    background-color: #fff;
+}
+.h2-no-mr-bottom .a-ttl_txt{
+    padding: 5px 0;
+}
+.fw #container{
+    padding-top: 0;
+}
+.h2-no-mr-bottom {
+    margin-bottom: 0 !important;
 }
