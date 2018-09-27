@@ -394,16 +394,36 @@
 <script>
     var marker = false;
     var center = {lat: "{{$event->lat ? $event->lat : 35.652832 }}", lng: "{{$event->long ? $event->long : 139.839478}}"};
-    center.lat = parseFloat(center.lat);
-    center.lng = parseFloat(center.lng);
+    center.lat = Number(center.lat);
+    center.lng = Number(center.lng);
 
     function getLatLongFromUrl(url) {
         try{
-            var regex = new RegExp('@(.*),(.*),');
-            var lon_lat_match = url.match(regex);
-            var lon = lon_lat_match[1];
-            var lat = lon_lat_match[2];
-            return [lat, lon];
+            var indexA = url.indexOf("@");
+            var lon = 0;
+            var lat = 0;
+            if(indexA >-1){
+                url = url.substr(indexA+1);
+                var indexFirst = url.indexOf(",");
+                if(indexFirst > -1){
+                    lat = url.substr(0,indexFirst);
+                    url = url.substr(indexFirst+1);
+                    var index2 = url.indexOf(",");
+                    if(index2 > -1){
+                        lon = url.substr(0,index2);
+                    }
+                }
+
+            }
+            if(lat!=0 && lon!=0){
+                var __res = {
+                    lat: Number(lat),
+                    lng: Number(lon)
+                };
+                return __res;
+            }
+            return null;
+
         }catch (err){
             return null;
         }
@@ -450,13 +470,11 @@
         function onChangeGooleMapLink(__url) {
             var latLong = getLatLongFromUrl(__url);
             if(latLong){
-                var _pos = {
-                    lat: parseFloat(latLong[1]),
-                    lng: parseFloat(latLong[0])
-                };
-                map.setCenter(_pos);
-                marker.setPosition(_pos);
-                markerLocation();
+                map.setCenter(latLong);
+                marker.setPosition(latLong);
+                $("#lat").val(latLong.lat);
+                $("#long").val(latLong.lng);
+                //markerLocation();
             }
         }
 
@@ -478,8 +496,8 @@
                         var id = $(event.target).attr("id");
                         if(id=="lat" || id == "long"){
                             var _pos = {
-                                lat: parseFloat($("#lat").val()),
-                                lng: parseFloat($("#long").val())
+                                lat: Number($("#lat").val()),
+                                lng: Number($("#long").val())
                             };
                             map.setCenter(_pos);
                             marker.setPosition(_pos);
