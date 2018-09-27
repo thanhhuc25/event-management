@@ -54,10 +54,20 @@ class HomeController extends Controller
     }
 
     private function _filterEvents($filters){
-        $now = date('Y-m-d H:i');
+        $now = date('Y-m-d 00:00');
         $sixtyDay = date('Y-m-d H:i');
-        $sixtyDay = date('Y-m-d H:i', strtotime($sixtyDay. ' + 62 days'));
-        $events = Event::whereBetween('open_date',[$now, $sixtyDay])->orderBy("open_date","asc");
+        $sixtyDay = date('Y-m-d H:i', strtotime($sixtyDay. ' + 60 days'));
+
+        $events = Event::where(function ($query) use ($now, $sixtyDay){
+            $query->orWhereBetween('open_date',[$now, $sixtyDay]);
+            $query->orWhereBetween('open_date2',[$now, $sixtyDay]);
+            $query->orWhereBetween('open_date3',[$now, $sixtyDay]);
+            $query->orWhereBetween('open_date4',[$now, $sixtyDay]);
+            $query->orWhereBetween('open_date5',[$now, $sixtyDay]);
+        });
+        $events = $events->orderBy("open_date","asc");
+
+
         if(isset($filters["province"]) && $filters["province"]){
             $events = $events->where("province_id", intval($filters["province"]));
         }

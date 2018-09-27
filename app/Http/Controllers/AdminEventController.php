@@ -114,18 +114,32 @@ class AdminEventController extends Controller
                 $event->open_date = $request->input("open_date");
             }catch (\Exception $exception){}
         }
-        //end_time
-        if($request->input("end_time", "")){
+        if($request->input("open_date2", "")){
             try{
-                $date = "1970-01-01 " . $request->input("end_time");
-                if($event->open_date){
-                    $date = date('Y-m-d ', strtotime($event->open_date)) . $request->input("end_time");
-                }
-                $event->end_date = $date;
-            }catch (\Exception $exception){
-            }
-
+                $event->open_date2 = $request->input("open_date2");
+            }catch (\Exception $exception){}
         }
+        if($request->input("open_date3", "")){
+            try{
+                $event->open_date3 = $request->input("open_date3");
+            }catch (\Exception $exception){}
+        }
+        if($request->input("open_date4", "")){
+            try{
+                $event->open_date4 = $request->input("open_date4");
+            }catch (\Exception $exception){}
+        }
+        if($request->input("open_date5", "")){
+            try{
+                $event->open_date5 = $request->input("open_date5");
+            }catch (\Exception $exception){}
+        }
+        $event->open_date_time = $request->input("open_date_time", "");
+        $event->open_date_time2 = $request->input("open_date_time2", "");
+        $event->open_date_time3 = $request->input("open_date_time3", "");
+        $event->open_date_time4 = $request->input("open_date_time4", "");
+        $event->open_date_time5 = $request->input("open_date_time5", "");
+
         $user = Auth::user();
         $event->user_created_id = $user->id;
         $event->save();

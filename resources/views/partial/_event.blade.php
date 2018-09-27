@@ -4,14 +4,12 @@
         <div class="a-ttl_txt">
             {{$event->category ? $event->category->name :""}}
         </div>
-        <div class="a-ttl_txt">
-            開催日時：
-            <span>
-                    {{$event->displayOpenDate()}}
-                @if($event->endTime())
-                    〜 {{$event->endTime()}}
-                @endif
-                </span>
+        <div class="a-ttl_txt flex-times">
+            <div>開催日時：</div>
+            <div>
+                    {!! $event->displayOpenDates() !!}
+
+            </div>
         </div>
         <div class="a-ttl_txt">
             住　　所：

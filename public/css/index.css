@@ -162,3 +162,13 @@ label{
 .h2-no-mr-bottom {
     margin-bottom: 0 !important;
 }
+.flex-times{
+    display: table;
+    width: 100%;
+}
+.flex-times > div{
+    display: table-cell;
+}
+.flex-times > div:first-child{
+    width: 70px;
+}

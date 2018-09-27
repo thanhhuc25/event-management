@@ -15,7 +15,7 @@
                 <div class="card">
                     <div class="card-header">
                         <h3 class="card-title">
-                            {{"イベント作成"}}
+                            {{$event->id == 0 ? "イベント作成" : "イベント編集"}}
                         </h3>
                     </div>
                     <div class="card-body">
@@ -44,28 +44,6 @@
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col-xs-12 col-md-3">
-                                    <div class="form-group">
-                                        <label for="open_date">{{"開催日時"}}</label>
-                                        <div class='input-group date' id='open_date'>
-                                            <input type='text' class="form-control" name="open_date" value="{{$event->open_date}}" />
-                                            <span class="input-group-addon">
-                                                <span class="glyphicon glyphicon-calendar"></span>
-                                            </span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-xs-12 col-md-3">
-                                    <div class="form-group">
-                                        <label for="open_date">{{"終了時間"}}</label>
-                                        <div class='input-group date' id='end_time'>
-                                            <input type='text' class="form-control" name="end_time" value="{{$event->endTime()}}" />
-                                            <span class="input-group-addon">
-                                                <span class="glyphicon glyphicon-calendar"></span>
-                                            </span>
-                                        </div>
-                                    </div>
-                                </div>
                                 <div class="col-xs-12 col-md-6">
                                     <div class="form-group">
                                         <label for="position">{{"住所"}}</label>
@@ -73,15 +51,7 @@
                                                id="position" name="position" placeholder="住所">
                                     </div>
                                 </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-xs-12 col-md-6">
-                                    <div class="form-group">
-                                        <label for="phone">{{"電話番号"}}</label>
-                                        <input type="text" class="form-control" value="{{$event->phone}}"
-                                               id="phone" name="phone" placeholder="電話番号">
-                                    </div>
-                                </div>
+
                                 <div class="col-xs-12 col-md-6">
                                     <div class="form-group">
                                         <label for="province_id">{{"都道府県"}}</label>
@@ -97,6 +67,123 @@
                                     </div>
                                 </div>
                             </div>
+                            <div class="row">
+                                <div class="col-xs-12 col-md-6">
+                                    <div class="form-group">
+                                        <label for="phone">{{"電話番号"}}</label>
+                                        <input type="text" class="form-control" value="{{$event->phone}}"
+                                               id="phone" name="phone" placeholder="電話番号">
+                                    </div>
+                                </div>
+
+                            </div>
+                            <!-- 開催時間-->
+                            <div class="row">
+                                <div class="col-xs-12 col-md-3">
+                                    <div class="form-group">
+                                        <label for="open_date">{{"開催日付"}}</label>
+                                        <div class='input-group date' id='open_date'>
+                                            <input type='text' class="form-control" name="open_date" value="{{$event->open_date}}" />
+                                            <span class="input-group-addon">
+                                                <span class="glyphicon glyphicon-calendar"></span>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xs-12 col-md-9">
+                                    <div class="form-group">
+                                        <label for="open_date">{{"時間"}}</label>
+                                        <div >
+                                            <input placeholder="10:00～12:00, 13:00～14:00" type='text' name="open_date_time" class="form-control" value="{{$event->open_date_time}}" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-12 col-md-3">
+                                    <div class="form-group">
+                                        <label for="open_date2">{{"開催日付"}}</label>
+                                        <div class='input-group date' id='open_date2'>
+                                            <input type='text' class="form-control" name="open_date2" value="{{$event->open_date2}}" />
+                                            <span class="input-group-addon">
+                                                <span class="glyphicon glyphicon-calendar"></span>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xs-12 col-md-9">
+                                    <div class="form-group">
+                                        <label for="open_date2">{{"時間"}}</label>
+                                        <div >
+                                            <input placeholder="10:00～12:00, 13:00～14:00" type='text' name="open_date_time2" class="form-control" value="{{$event->open_date_time2}}" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-12 col-md-3">
+                                    <div class="form-group">
+                                        <label for="open_date3">{{"開催日付"}}</label>
+                                        <div class='input-group date' id='open_date3'>
+                                            <input type='text' class="form-control" name="open_date3" value="{{$event->open_date3}}" />
+                                            <span class="input-group-addon">
+                                                <span class="glyphicon glyphicon-calendar"></span>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xs-12 col-md-9">
+                                    <div class="form-group">
+                                        <label for="open_date3">{{"時間"}}</label>
+                                        <div >
+                                            <input placeholder="10:00～12:00, 13:00～14:00" type='text' name="open_date_time3" class="form-control" value="{{$event->open_date_time3}}" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-12 col-md-3">
+                                    <div class="form-group">
+                                        <label for="open_date4">{{"開催日付"}}</label>
+                                        <div class='input-group date' id='open_date4'>
+                                            <input type='text' class="form-control" name="open_date4" value="{{$event->open_date4}}" />
+                                            <span class="input-group-addon">
+                                                <span class="glyphicon glyphicon-calendar"></span>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xs-12 col-md-9">
+                                    <div class="form-group">
+                                        <label for="open_date4">{{"時間"}}</label>
+                                        <div >
+                                            <input placeholder="10:00～12:00, 13:00～14:00" type='text' name="open_date_time4" class="form-control" value="{{$event->open_date_time4}}" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-12 col-md-3">
+                                    <div class="form-group">
+                                        <label for="open_date5">{{"開催日付"}}</label>
+                                        <div class='input-group date' id='open_date5'>
+                                            <input type='text' class="form-control" name="open_date5" value="{{$event->open_date5}}" />
+                                            <span class="input-group-addon">
+                                                <span class="glyphicon glyphicon-calendar"></span>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xs-12 col-md-9">
+                                    <div class="form-group">
+                                        <label for="open_date5">{{"時間"}}</label>
+                                        <div >
+                                            <input placeholder="10:00～12:00, 13:00～14:00" type='text' name="open_date_time5" class="form-control" value="{{$event->open_date_time5}}" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- ./開催時間-->
                             <div class="row">
                                 <div class="col-xs-12">
                                     <label>{{"メディア"}}</label>
@@ -158,7 +245,7 @@
                                     <br/>
                                     <div class="form-group">
                                         <label for="comment">{{"コメント"}}</label>
-                                        <textarea placeholder="コメント" class="form-control" id="comment" name="comment">{{$event->comment}}</textarea>
+                                        <textarea rows="4" placeholder="コメント" class="form-control" id="comment" name="comment">{{$event->comment}}</textarea>
                                     </div>
                                 </div>
                             </div>
@@ -228,12 +315,45 @@
                 }
             },
             mounted: function () {
-                $('#open_date').datetimepicker({
-                    format: 'YYYY-MM-DD HH:mm'
-                });
-                $('#end_time').datetimepicker({
-                    format: 'HH:mm'
-                });
+                for(var i = 1; i <=5 ; i++){
+                    var id = '#open_date' + (i==1 ? '' : i);
+                    var val = $(id).find(">input").val();
+                    if(val){
+                        try{
+                            $(id).datetimepicker({
+                                format: 'YYYY-MM-DD',
+                                minDate: moment(val).subtract(1, "days"),
+                                maxDate: moment(val).add(60, 'days'),
+                                useCurrent: false,
+                                defaultDate: moment(val).format("YYYY-MM-DD")
+                            });
+                        }catch (er){
+                            $(id).datetimepicker({
+                                format: 'YYYY-MM-DD',
+                                useCurrent: false
+                            });
+                        }
+
+                    }else{
+                        try{
+                            $(id).datetimepicker({
+                                format: 'YYYY-MM-DD',
+                                minDate: moment().format("YYYY-MM-DD 00:00:00"),
+                                maxDate: moment().add(60, 'days'),
+                                useCurrent: false
+                            });
+                        }catch (err){
+                            $(id).datetimepicker({
+                                format: 'YYYY-MM-DD',
+                                useCurrent: false
+                            });
+                        }
+                    }
+
+
+                }
+
+
                 $("#form-upload").show();
                 var self = this;
                 $.ajax({

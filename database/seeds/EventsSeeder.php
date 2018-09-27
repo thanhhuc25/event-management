@@ -14,45 +14,22 @@ class EventsSeeder extends Seeder
     {
         $events = [
             [
-                "shop_name"=>"（有）チハラ金物店", "open_date"=>"2018-09-08 10:00", "end_date"=>"2018-09-08 17:00",
+                "shop_name"=>"（有）チハラ金物店",
+                "open_date"=>"2018-09-08",
+                "open_datetime"=>"10:00～ 12:00, 13:00～14:00, 14:00～15:00",
+                "open_date2"=>"2018-10-08",
+                "open_datetime2"=>"10:00～ 12:00, 13:00～14:00, 14:00～15:00",
                 "phone"=> "0495-72-0014", "position"=>"埼玉県本庄市児玉町児玉１５１", "comment"=>"充実ラインナップのマキタ製品をご体感ください",
                 "lat"=>36.18982500594721, "long"=>139.1293496, "province"=>11
             ],
             [
-                "shop_name"=>"ホームセンターコーナン 寝屋川昭栄店", "open_date"=>"2018-09-09 10:00", "end_date"=>"2018-09-09 14:00",
-                "phone"=> "072-811-3660", "position"=>"大阪府寝屋川市昭栄町18番20号", "comment"=>"今年もやります！園芸ファンに大人気、マキタの充電式園芸工具が一堂に！
-                    　新商品も続々登場。最新の草刈機など、実際に触ってみたくなる商品が
-                    　勢ぞろい。",
-                "lat"=>34.758573, "long"=>135.62562000000003, "category"=>1, "province"=>27
-            ],
-            [
-                "shop_name"=>"ホームセンターコーナン 外環新石切店", "open_date"=>"2018-09-09 10:00", "end_date"=>"2018-09-09 14:00",
-                "phone"=> "072-811-3660", "position"=>"大阪府寝屋川市昭栄町18番20号", "comment"=>"今年もやります！園芸ファンに大人気、マキタの充電式園芸工具が一堂に！
-                    　新商品も続々登場。最新の草刈機など、実際に触ってみたくなる商品が
-                    　勢ぞろい。",
-                "lat"=>34.758573, "long"=>135.62562000000003, "category"=>1, "province"=>27
-            ],
-            [
-                "shop_name"=>"後藤機工㈱", "open_date"=>"2018-09-09 10:00", "end_date"=>"2018-09-09 14:00",
-                "phone"=> "072-811-3660", "position"=>"大阪府寝屋川市昭栄町18番20号", "comment"=>"今年もやります！園芸ファンに大人気、マキタの充電式園芸工具が一堂に！
-                    　新商品も続々登場。最新の草刈機など、実際に触ってみたくなる商品が
-                    　勢ぞろい。",
-                "lat"=>34.758573, "long"=>135.62562000000003,  "province"=>1
-            ],
-            [
-                "shop_name"=>"（有）有木機工", "open_date"=>"2018-10-09 10:00", "end_date"=>"2018-09-09 14:00",
-                "phone"=> "072-811-3660", "position"=>"大阪府寝屋川市昭栄町18番20号", "comment"=>"今年もやります！園芸ファンに大人気、マキタの充電式園芸工具が一堂に！
-                    　新商品も続々登場。最新の草刈機など、実際に触ってみたくなる商品が
-                    　勢ぞろい。",
-                "lat"=>34.758573, "long"=>135.62562000000003, "category"=>1, "province"=>1
-            ],
-            [
-                "shop_name"=>"佐伯機工", "open_date"=>"2018-10-10 10:00", "end_date"=>"2018-09-09 14:00",
-                "phone"=> "072-811-3660", "position"=>"大阪府寝屋川市昭栄町18番20号", "comment"=>"今年もやります！園芸ファンに大人気、マキタの充電式園芸工具が一堂に！
-                    　新商品も続々登場。最新の草刈機など、実際に触ってみたくなる商品が
-                    　勢ぞろい。",
-                "lat"=>34.758573, "long"=>135.62562000000003,  "province"=>18
+                "shop_name"=>"中戸金物店",
+                "open_date"=>"2018-09-08",
+                "open_datetime"=>"10:00～ 12:00, 13:00～14:00, 14:00～15:00",
+                "phone"=> "0495-72-0014", "position"=>"埼玉県本庄市児玉町児玉１５１", "comment"=>"充実ラインナップのマキタ製品をご体感ください",
+                "lat"=>36.18982500594721, "long"=>139.1293496, "province"=>11
             ]
+
         ];
         foreach ($events as $event){
             $e = new Event;
@@ -60,7 +37,9 @@ class EventsSeeder extends Seeder
             $e->category_id = isset($event["category"]) ? $event["category"]: null;
             $e->shop_name = isset($event["shop_name"]) ? $event["shop_name"]: null;
             $e->open_date = isset($event["open_date"]) ? $event["open_date"]: null;
-            $e->end_date = isset($event["end_date"]) ? $event["end_date"]: null;
+            $e->open_date_time = isset($event["open_datetime"]) ? $event["open_datetime"]: null;
+            $e->open_date2 = isset($event["open_date2"]) ? $event["open_date2"]: null;
+            $e->open_date_time2 = isset($event["open_datetime2"]) ? $event["open_datetime2"]: null;
             $e->phone = isset($event["phone"]) ? $event["phone"]: null;
             $e->comment = isset($event["comment"]) ? $event["comment"]: null;
             $e->lat = isset($event["lat"]) ? $event["lat"]: null;
