@@ -48,7 +48,7 @@
             <li class="f-flex6">
                 <div class="bg-white">
                     <a target="_blank" class="a-btn a-btn_arrow a-btn_sub"
-                       href="https://www.google.com/maps?q={{$event->lat}},{{$event->long}}">
+                       href="{{$event->google_map_link ? $event->google_map_link : 'https://www.google.com/maps?q='.$event->lat.','.$event->long}}">
                         Googleマップ
                     </a>
                 </div>

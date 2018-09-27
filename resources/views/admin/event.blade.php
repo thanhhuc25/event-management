@@ -225,6 +225,20 @@
                                 <div class="col-xs-12">
                                     <br/>
                                     <label>マップ</label>
+                                    <div>
+                                        <a class="btn btn-sm btn-primary"
+                                           href="https://www.google.com/maps/"
+                                           title="住所情報を取得するボタン" target="_blank">
+                                            {{"住所情報を取得する"}}
+                                        </a>
+                                        <div class="map-link-input">
+                                            <label>Googleマップのリンク</label>
+                                            <input id="google_map_link" name="google_map_link"
+                                                   value="{{$event->google_map_link}}"
+                                                   class="form-control" placeholder="Googleマップのリンク">
+                                        </div>
+                                    </div>
+                                    <br/>
                                     <div class="form-inline" style="margin-bottom: 20px">
                                         <div class="form-group">
                                             <label for="lat">Latitude</label>
@@ -382,6 +396,19 @@
     var center = {lat: "{{$event->lat ? $event->lat : 35.652832 }}", lng: "{{$event->long ? $event->long : 139.839478}}"};
     center.lat = parseFloat(center.lat);
     center.lng = parseFloat(center.lng);
+
+    function getLatLongFromUrl(url) {
+        try{
+            var regex = new RegExp('@(.*),(.*),');
+            var lon_lat_match = url.match(regex);
+            var lon = lon_lat_match[1];
+            var lat = lon_lat_match[2];
+            return [lat, lon];
+        }catch (err){
+            return null;
+        }
+    }
+
     function initMap() {
         var map = new google.maps.Map(document.getElementById('map'), {
             center: center,
@@ -419,6 +446,29 @@
             $("#lat").val(currentLocation.lat());
             $("#long").val(currentLocation.lng());
         }
+        
+        function onChangeGooleMapLink(__url) {
+            var latLong = getLatLongFromUrl(__url);
+            if(latLong){
+                var _pos = {
+                    lat: parseFloat(latLong[1]),
+                    lng: parseFloat(latLong[0])
+                };
+                map.setCenter(_pos);
+                marker.setPosition(_pos);
+                markerLocation();
+            }
+        }
+
+        $("#google_map_link").change(function () {
+            var _url = $(this).val();
+            onChangeGooleMapLink(_url);
+        });
+        $("#google_map_link").keyup(function () {
+            var _url = $(this).val();
+            onChangeGooleMapLink(_url);
+
+        });
         function changeLatLong() {
             // prevent enter input submit
             $(window).keydown(function(event){
