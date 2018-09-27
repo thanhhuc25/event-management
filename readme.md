@@ -43,4 +43,4 @@ php artisan db:seed --class=EventsSeeder
 ![Alt text](public/images/admin.png?raw=true "Admin page")
 
 イベント編集ページ
-![Alt text](public/images/event-edit.png?raw=true "Event edit page")
+![Alt text](public/images/admin-event-edit.png?raw=true "Event edit page")
