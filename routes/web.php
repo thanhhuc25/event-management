@@ -18,7 +18,7 @@
 //Auth::routes();
 
 Route::get('/', 'HomeController@index')->name('home');
-Route::get('/search', 'HomeController@search')->name('search');
+Route::any('/search', 'HomeController@search')->name('search');
 
 // admin login
 Route::get('/admin/login', "AdminController@showLogin")->name("adminShowLogin");

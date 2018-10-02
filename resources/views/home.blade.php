@@ -5,6 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width">
     <meta name="format-detection" content="telephone=no">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <title>イベント情報</title>
 
@@ -164,7 +165,12 @@
                 _province = $("#provinces").val(),
                 _area = $("#area").val();
             $.ajax({
-                url: "{{route('search')}}?category="+_cat + "&province="+_province+"&area="+_area
+                type: "POST",
+                url: "{{route('search')}}",
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                data: { category: _cat, province: _province, area: _area}
             }).done(function (data) {
                 var $_html = $(data);
                 $("#res").html($_html.find("#res").html());

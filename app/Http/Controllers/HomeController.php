@@ -48,6 +48,15 @@ class HomeController extends Controller
         $area = $request->query('area', "") ;
         $province = $request->query('province', "");
         $category = $request->query('category', "");
+        if($area==""){
+            $area = $request->input("area", "");
+        }
+        if($province==""){
+            $province = $request->input("province", "");
+        }
+        if($category==""){
+            $category = $request->input("category", "");
+        }
         $filters = ["area"=>$area, "province"=>$province, "category"=>$category];
         $events = $this->_filterEvents($filters);
         return $this->_render($events);
