@@ -53,7 +53,7 @@
                                             <input value="{{$event->zip01}}" maxlength="3" type="text" id="zip01" name="zip01" pattern="\d*" class="form-control zip-c" placeholder="141">
                                             -
                                             <input value="{{$event->zip02}}" maxlength="4" type="text" id="zip02" name="zip02" pattern="\d*" class="form-control zip-c" placeholder="0032">
-                                            <button class="btn bn-sm btn-success" id="btn-auto-zip">郵便番号から自動入力</button>
+                                            <button class="btn bn-sm btn-success" id="btn-auto-zip">郵便番号から住所を自動取得</button>
                                         </div>
                                     </div>
 
@@ -109,10 +109,18 @@
                                     </div>
                                     <div class="col-xs-12 col-md-9">
                                         <div class="form-group">
+                                            <label >{{""}}</label>
+                                            <p style="margin-top: 10px">イベント毎の時間（最大5件登録できます</p>
+                                        </div>
+
+                                    </div>
+                                    <div class="col-xs-12">
+                                        <div class="form-group">
                                             <label for="open_date{{$i==1?"":$i}}">{{"時間"}}</label>
                                             <div>
                                                 @for ($j = 1; $j <= 5; $j++)
                                                     <div class="hour-minute-items">
+                                                        <label>イベント{{$j}}回目：</label>
                                                         <select class="form-control" name="opentime_day_hour_start_{{$i}}_{{$j}}" >
                                                             <option value="">時</option>
                                                             @for($h=0; $h<=24; $h++)
