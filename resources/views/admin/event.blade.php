@@ -47,10 +47,16 @@
                             <div class="row">
                                 <div class="col-xs-12 col-md-6">
                                     <div class="form-group">
-                                        <label for="position">{{"住所"}}</label>
-                                        <input type="text" class="form-control" value="{{$event->position}}"
-                                               id="position" name="position" placeholder="住所">
+                                        <label>郵便番号</label>
+                                        <div>
+                                            〒
+                                            <input value="{{$event->zip01}}" maxlength="3" type="text" id="zip01" name="zip01" pattern="\d*" class="form-control zip-c" placeholder="141">
+                                            -
+                                            <input value="{{$event->zip02}}" maxlength="4" type="text" id="zip02" name="zip02" pattern="\d*" class="form-control zip-c" placeholder="0032">
+                                            <button class="btn bn-sm btn-success" id="btn-auto-zip">郵便番号から自動入力</button>
+                                        </div>
                                     </div>
+
                                 </div>
 
                                 <div class="col-xs-12 col-md-6">
@@ -71,21 +77,17 @@
                             <div class="row">
                                 <div class="col-xs-12 col-md-6">
                                     <div class="form-group">
-                                        <label for="phone">{{"電話番号"}}</label>
-                                        <input type="text" class="form-control" value="{{$event->phone}}"
-                                               id="phone" name="phone" placeholder="電話番号">
+                                        <label for="position">{{"住所"}}</label>
+                                        <input type="text" class="form-control" value="{{$event->position}}"
+                                               id="position" name="position" placeholder="住所">
                                     </div>
                                 </div>
                                 <div class="col-xs-12 col-md-6">
+
                                     <div class="form-group">
-                                        <label>郵便番号</label>
-                                        <div>
-                                            〒
-                                            <input value="{{$event->zip01}}" maxlength="3" type="text" id="zip01" name="zip01" pattern="\d*" class="form-control zip-c" placeholder="141">
-                                            -
-                                            <input value="{{$event->zip02}}" maxlength="4" type="text" id="zip02" name="zip02" pattern="\d*" class="form-control zip-c" placeholder="0032">
-                                            <button class="btn bn-sm btn-success" id="btn-auto-zip">郵便番号から自動入力</button>
-                                        </div>
+                                        <label for="phone">{{"電話番号"}}</label>
+                                        <input type="text" class="form-control" value="{{$event->phone}}"
+                                               id="phone" name="phone" placeholder="電話番号">
                                     </div>
                                 </div>
 
