@@ -108,59 +108,53 @@
                                         </div>
                                     </div>
                                     <div class="col-xs-12 col-md-9">
-                                        <div class="form-group">
-                                            <label >{{""}}</label>
-                                            <p style="margin-top: 10px">イベント毎の時間（最大5件登録できます）</p>
-                                        </div>
+                                            <div class="form-group">
+                                                <label for="open_date{{$i==1?"":$i}}">{{"イベント毎の時間（最大5件登録できます）"}}</label>
+                                                <div>
+                                                    @for ($j = 1; $j <= 5; $j++)
+                                                        <div class="hour-minute-items">
+                                                            <label>イベント{{$j}}回目：</label>
+                                                            <select class="form-control" name="opentime_day_hour_start_{{$i}}_{{$j}}" >
+                                                                <option value="">時</option>
+                                                                @for($h=0; $h<=24; $h++)
+                                                                    <option value="{{$h}}"
+                                                                            {{ $event[("opentime_day_hour_start_".$i."_".$j)]!="" && $event[("opentime_day_hour_start_".$i."_".$j)]==$h ? "selected" : ""}} >
+                                                                        {{$h<10 ? "0".$h : $h}}
+                                                                    </option>
+                                                                @endfor
+                                                            </select>
+                                                            <select class="form-control" name="opentime_day_minute_start_{{$i}}_{{$j}}">
+                                                                <option value="">分</option>
+                                                                @for($m=0; $m<=45; $m+=15)
+                                                                    <option value="{{$m}}"
+                                                                            {{ $event[("opentime_day_minute_start_".$i."_".$j)]!="" && $event[("opentime_day_minute_start_".$i."_".$j)]==$m ? "selected" : ""}}>{{$m<10 ? "0".$m : $m}}</option>
+                                                                @endfor
+                                                            </select>
+                                                            <label>〜</label>
+                                                            <select class="form-control"  name="opentime_day_hour_end_{{$i}}_{{$j}}">
+                                                                <option value="">時</option>
+                                                                @for($h=0; $h<=24; $h++)
+                                                                    <option value="{{$h}}"
+                                                                            {{$event[("opentime_day_hour_end_".$i."_".$j)]!=""&& $event[("opentime_day_hour_end_".$i."_".$j)]==$h ? "selected" : ""}}>{{$h<10 ? "0".$h : $h}}</option>
+                                                                @endfor
+                                                            </select>
+                                                            <select class="form-control" name="opentime_day_minute_end_{{$i}}_{{$j}}">
+                                                                <option value="">分</option>
+                                                                @for($m=0; $m<=45; $m+=15)
+                                                                    <option value="{{$m}}"
+                                                                            {{
+                                                                            $event[("opentime_day_minute_end_".$i."_".$j)]!=""&&
+                                                                            $event[("opentime_day_minute_end_".$i."_".$j)]==$m ? "selected" : ""}}>{{$m<10 ? "0".$m : $m}}</option>
+                                                                @endfor
+                                                            </select>
+                                                        </div>
+                                                    @endfor
+                                                </div>
+                                                <div>
+                                                    <textarea placeholder="備考" class="form-control" name="comment_day_{{$i}}">{{$event[("comment_day_".$i)]}}</textarea>
+                                                </div>
+                                            </div>
 
-                                    </div>
-                                    <div class="col-xs-12">
-                                        <div class="form-group">
-                                            <label for="open_date{{$i==1?"":$i}}">{{""}}</label>
-                                            <div>
-                                                @for ($j = 1; $j <= 5; $j++)
-                                                    <div class="hour-minute-items">
-                                                        <label>イベント{{$j}}回目：</label>
-                                                        <select class="form-control" name="opentime_day_hour_start_{{$i}}_{{$j}}" >
-                                                            <option value="">時</option>
-                                                            @for($h=0; $h<=24; $h++)
-                                                                <option value="{{$h}}"
-                                                                        {{ $event[("opentime_day_hour_start_".$i."_".$j)]!="" && $event[("opentime_day_hour_start_".$i."_".$j)]==$h ? "selected" : ""}} >
-                                                                    {{$h<10 ? "0".$h : $h}}
-                                                                </option>
-                                                            @endfor
-                                                        </select>
-                                                        <select class="form-control" name="opentime_day_minute_start_{{$i}}_{{$j}}">
-                                                            <option value="">分</option>
-                                                            @for($m=0; $m<=45; $m+=15)
-                                                                <option value="{{$m}}"
-                                                                        {{ $event[("opentime_day_minute_start_".$i."_".$j)]!="" && $event[("opentime_day_minute_start_".$i."_".$j)]==$m ? "selected" : ""}}>{{$m<10 ? "0".$m : $m}}</option>
-                                                            @endfor
-                                                        </select>
-                                                        <label>〜</label>
-                                                        <select class="form-control"  name="opentime_day_hour_end_{{$i}}_{{$j}}">
-                                                            <option value="">時</option>
-                                                            @for($h=0; $h<=24; $h++)
-                                                                <option value="{{$h}}"
-                                                                        {{$event[("opentime_day_hour_end_".$i."_".$j)]!=""&& $event[("opentime_day_hour_end_".$i."_".$j)]==$h ? "selected" : ""}}>{{$h<10 ? "0".$h : $h}}</option>
-                                                            @endfor
-                                                        </select>
-                                                        <select class="form-control" name="opentime_day_minute_end_{{$i}}_{{$j}}">
-                                                            <option value="">分</option>
-                                                            @for($m=0; $m<=45; $m+=15)
-                                                                <option value="{{$m}}"
-                                                                        {{
-                                                                        $event[("opentime_day_minute_end_".$i."_".$j)]!=""&&
-                                                                        $event[("opentime_day_minute_end_".$i."_".$j)]==$m ? "selected" : ""}}>{{$m<10 ? "0".$m : $m}}</option>
-                                                            @endfor
-                                                        </select>
-                                                    </div>
-                                                @endfor
-                                            </div>
-                                            <div>
-                                                <textarea placeholder="備考" class="form-control" name="comment_day_{{$i}}">{{$event[("comment_day_".$i)]}}</textarea>
-                                            </div>
-                                        </div>
                                     </div>
                                 </div>
                             @endfor
