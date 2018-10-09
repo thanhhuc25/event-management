@@ -110,13 +110,13 @@
                                     <div class="col-xs-12 col-md-9">
                                         <div class="form-group">
                                             <label >{{""}}</label>
-                                            <p style="margin-top: 10px">イベント毎の時間（最大5件登録できます</p>
+                                            <p style="margin-top: 10px">イベント毎の時間（最大5件登録できます）</p>
                                         </div>
 
                                     </div>
                                     <div class="col-xs-12">
                                         <div class="form-group">
-                                            <label for="open_date{{$i==1?"":$i}}">{{"時間"}}</label>
+                                            <label for="open_date{{$i==1?"":$i}}">{{""}}</label>
                                             <div>
                                                 @for ($j = 1; $j <= 5; $j++)
                                                     <div class="hour-minute-items">
