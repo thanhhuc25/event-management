@@ -1,9 +1,11 @@
 <div class="item-x" id="event-{{$event->id}}">
     <h2 class="a-ttl_h2 a-ttl_border a-ttl_border_bg a-ttl_main h2-no-mr-bottom" >
         {{$event->shop_name}}
+<!--
         <div class="a-ttl_txt">
             {{$event->category ? $event->category->name :""}}
         </div>
+-->
         <div class="a-ttl_txt flex-times">
             <div>開催日時：</div>
             <div>
@@ -14,7 +16,7 @@
         <div class="a-ttl_txt">
             住　　所：
             <span>
-                  {{$event->position}}
+                  {{$event->province ? $event->province->name : ""}}{{$event->position}}
                 </span>
         </div>
         <div class="a-ttl_txt">
@@ -24,7 +26,7 @@
                 </span>
         </div>
         <div class="a-ttl_txt">
-            {{$event->comment}}
+            {!! nl2br( $event->comment) !!}
         </div>
     </h2>
     <div class="f-section f-section--home">
@@ -45,22 +47,26 @@
     </div>
     <div class="f-section">
         <ul class="m-list_box f-flex f-flex_mb30 no-print-btn">
-            <li class="f-flex6">
-                <div class="bg-white">
+            <li class="f-flex6 bg-white no-bg">
+                @if($event->google_map_link)
+                <div class="bg-white no-bg">
                     <a target="_blank" class="a-btn a-btn_arrow a-btn_sub"
-                       href="{{$event->google_map_link ? $event->google_map_link : 'https://www.google.com/maps?q='.$event->lat.','.$event->long}}">
-                        Googleマップ
+                       href="{{$event->google_map_link}}">
+                        Googleマップ
                     </a>
                 </div>
+                @endif
             </li>
             <li class="f-flex6">
                 <div class="bg-white" style="text-align: right;">
-                    <button class="a-btn a-btn_arrow a-btn_main btn-print"
+                    <a class="a-btn a-btn_arrow a-btn_main btn-print"
+                            data-short="{{$event->google_map_link ? $event->google_map_link : 'https://www.google.com/maps?q='.$event->lat.','.$event->long}}"
                             data-lat="{{$event->lat}}"
                             data-long="{{$event->long}}"
+                            data-maplink="{{$event->google_map_link ? $event->google_map_link : ""}}"
                             data-print="event-{{$event->id}}">
                         {{"印刷する"}}
-                    </button>
+                    </a>
                 </div>
             </li>
         </ul>

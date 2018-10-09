@@ -44,31 +44,28 @@
 <header id="header" >
     <div class="header-bar">
 
-        <a title="ホームページ" href="{{url("/")}}" class="header-logo"><img src="{{asset("css/common/images/common/logo/logo.png")}}" alt="HIKOKI"></a>
+        <a title="ホームページ" href="https://www.hikoki-powertools.jp" class="header-logo"><img src="{{asset("css/common/images/common/logo/logo.png")}}" alt="HIKOKI"></a>
 
     </div>
 
 </header>
 <!-- /#header -->
 
-<h1 class="a-ttl_bgimg a-ttl_h1 no-print" style="background-image:url({{asset("css/common/images/banner.jpg")}});">
-</h1>
-<section class="f-section no-print">
-    <h2 class="a-ttl_h2 a-ttl_border a-ttl_border_bg a-ttl_main">
-        HiKOKIイベント情報
-        <span class="a-ttl_txt">マルチボルト製品など話題の新製品是非ご体験ください</span>
-    </h2>
-</section>
-
 <div id="container" class="no-print">
 
     <div class="f-inner">
-
-        <main id="contents" class="f-max">
+	<section class="f-section_m">
+	    <div class="f-flex12 f-flex12_s">
+	        <div class="a-txt_center">
+	            <img src="css/common/images/banner.jpg" alt="HiKOKIイベント情報" width="100%">
+	        </div>
+	    </div>
+	</section>
+	<main id="contents" class="f-max">
             <div class="f-section f-section--home">
                 <ul class="m-list_box f-flex f-flex_mb30">
-                    <li class="f-flex4 f-flex12_s">
-                        <div class="bg-white">
+                    <li class="f-flex6 f-flex12_s">
+                        <div class="bg-white a-txt_center">
                             <label>
                                 {{"エリア"}}
                             </label>
@@ -82,8 +79,8 @@
                             </select>
                         </div>
                     </li>
-                    <li class="f-flex4 f-flex12_s">
-                        <div class="bg-white">
+                    <li class="f-flex6 f-flex12_s">
+                        <div class="bg-white a-txt_center">
                             <label>
                                 {{"都道府県"}}
                             </label>
@@ -97,6 +94,8 @@
                             </select>
                         </div>
                     </li>
+                    <input type="hidden" id="category" class="sl" value="">
+<!--
                     <li class="f-flex4 f-flex12_s">
                         <div class="bg-white">
                             <label>
@@ -112,6 +111,7 @@
                             </select>
                         </div>
                     </li>
+-->
                 </ul>
             </div>
             <div class="res" id="res">
@@ -201,10 +201,65 @@
                 lat: parseFloat($(this).data("lat")),
                 lng: parseFloat($(this).data("long"))
             };
+
+            var result_lat = $.isNumeric(_pos.lat);
+            var result_lng = $.isNumeric(_pos.lng);
             var _urlMap = "https://maps.googleapis.com/maps/api/staticmap?zoom=16&size=500x300&key={{Config::get('app.google_map_key')}}";
-            _urlMap+="&center="+_pos.lat+","+_pos.lng;
-            _urlMap+="&markers=olor:red%7Clabel:G%7C"+_pos.lat+","+_pos.lng+"";
+
+            //短縮URLが存在するかチェック
+            var short = $(this).data("short");
+            if(short.length>0 && $(this).data("maplink")){
+                //ajaxで短縮URLから緯度経度取得
+                $.ajax({
+                    type: "GET",
+                    async : false,
+                    url: "/?map_url="+short,
+                    dataType: "json",
+                    success: function(data, dataType){
+                        //data.latとdata.lngに値があるか、数値かチェック
+                        _urlMap+="&center="+data.lat+","+data.lng;
+                        _urlMap+="&markers=olor:red%7Clabel:G%7C"+data.lat+","+data.lng+"";
+                    }
+                });
+            }else{
+                //DBのlatlngから地図生成
+                if(result_lat == true && result_lng == true ){
+                    _urlMap+="&center="+_pos.lat+","+_pos.lng;
+                    _urlMap+="&markers=olor:red%7Clabel:G%7C"+_pos.lat+","+_pos.lng+"";
+
+                }else{
+                    //地図の情報取得不可
+
+                }
+            }
+
+
+/*
+            if(result_lat == true && result_lng == true ){
+                _urlMap+="&center="+_pos.lat+","+_pos.lng;
+                _urlMap+="&markers=olor:red%7Clabel:G%7C"+_pos.lat+","+_pos.lng+"";
+
+            }else{
+                var short = $(this).data("short");
+                $.ajax({
+                    type: "GET",
+                    async : false,
+                    url: "/?map_url="+short,
+                    dataType: "json",
+                    success: function(data, dataType){
+                        _urlMap+="&center="+data.lat+","+data.lng;
+                        _urlMap+="&markers=olor:red%7Clabel:G%7C"+data.lat+","+data.lng+"";
+                    }
+                });
+            }
+*/
+
             $("#map-img").attr("src",_urlMap);
+            if($(this).data("maplink")){
+                $("#map-img").show();
+            }else{
+                $("#map-img").hide();
+            }
             setTimeout(function () {
                 window.print();
             },1500);

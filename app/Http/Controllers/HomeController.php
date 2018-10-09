@@ -27,6 +27,50 @@ class HomeController extends Controller
      */
     public function index()
     {
+
+
+        if(isset($_GET['map_url'])){
+
+            if(strpos($_GET['map_url'],'/@') !== false){
+                $check_arrayurl1 = explode("/@",$_GET['map_url']);
+                $check_arrayurl2 = explode("/",$check_arrayurl1[1]);
+                $check_arrayurl3 = explode(",",$check_arrayurl2[0]);
+
+                $return_array['lat'] = array($check_arrayurl3[0]);
+                $return_array['lng'] = array($check_arrayurl3[1]);
+
+            }else{
+                try{
+                    $header = get_headers($_GET['map_url']);
+                    $geturl = preg_replace('@^Location: @','',$header[7]);
+                    $arrayurl1 = explode("/@",$geturl);
+                    $arrayurl2 = explode("/",$arrayurl1[1]);
+                    $arrayurl3 = explode(",",$arrayurl2[0]);
+
+                    $return_array['lat'] = array($arrayurl3[0]);
+                    $return_array['lng'] = array($arrayurl3[1]);
+                }catch (\Exception $e){
+                    $url=$_GET['map_url'];
+                    $ch = curl_init();
+                    curl_setopt($ch, CURLOPT_URL, $url);
+                    curl_setopt($ch, CURLOPT_HEADER, true);
+                    curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true); // Must be set to true so that PHP follows any "Location:" header
+                    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+                    $a = curl_exec($ch); // $a will contain all headers
+                    $url = curl_getinfo($ch, CURLINFO_EFFECTIVE_URL); // This is what you need, it will return you the last effective URL
+                    $geturl = $url;
+                    $arrayurl1 = explode("/@",$geturl);
+                    $arrayurl2 = explode("/",$arrayurl1[1]);
+                    $arrayurl3 = explode(",",$arrayurl2[0]);
+                    $return_array['lat'] = array($arrayurl3[0]);
+                    $return_array['lng'] = array($arrayurl3[1]);
+                }
+            }
+
+            echo json_encode($return_array);
+
+            exit;
+        }
         $events = $this->_filterEvents([]);
         return $this->_render($events);
     }

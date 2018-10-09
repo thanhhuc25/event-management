@@ -103,6 +103,8 @@ class AdminEventController extends Controller
             $event->province_id = $request->input("province_id");
         }
         $event->position = $request->input("position", "");
+        $event->zip01 = $request->input("zip01", "");
+        $event->zip02 = $request->input("zip02", "");
         $event->google_map_link = $request->input("google_map_link", "");
         $event->comment = $request->input("comment", "");
         $event->phone = $request->input("phone", "");
@@ -135,11 +137,17 @@ class AdminEventController extends Controller
                 $event->open_date5 = $request->input("open_date5");
             }catch (\Exception $exception){}
         }
-        $event->open_date_time = $request->input("open_date_time", "");
-        $event->open_date_time2 = $request->input("open_date_time2", "");
-        $event->open_date_time3 = $request->input("open_date_time3", "");
-        $event->open_date_time4 = $request->input("open_date_time4", "");
-        $event->open_date_time5 = $request->input("open_date_time5", "");
+        for($row=1; $row<=5; $row++){
+            $colSuffix = "_".$row;
+            $event[("comment_day_".$row)] = $request->input(("comment_day_".$row), "");
+            for($col=1; $col<=5; $col++){
+                $rowSuffix =  "_".$col;
+                $event[("opentime_day_hour_start".$colSuffix.$rowSuffix)] = $request->input((("opentime_day_hour_start".$colSuffix.$rowSuffix)), "");
+                $event[("opentime_day_minute_start".$colSuffix.$rowSuffix)] = $request->input((("opentime_day_minute_start".$colSuffix.$rowSuffix)), "");
+                $event[("opentime_day_hour_end".$colSuffix.$rowSuffix)] = $request->input((("opentime_day_hour_end".$colSuffix.$rowSuffix)), "");
+                $event[("opentime_day_minute_end".$colSuffix.$rowSuffix)] = $request->input((("opentime_day_minute_end".$colSuffix.$rowSuffix)), "");
+            }
+        }
 
         $user = Auth::user();
         $event->user_created_id = $user->id;

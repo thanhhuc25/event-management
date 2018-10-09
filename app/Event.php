@@ -29,26 +29,25 @@ class Event extends Model
         return "";
     }
 
-    private function _splitTime3Word($str){
-
-        $arr = explode(",", $str);
-        $filterArray = [];
-        foreach ($arr as $a){
-            $_a = trim($a);
-            if(strlen($_a) > 0){
-                $filterArray[]=$_a;
-            }
-        }
-        $arr = $filterArray;
+    private function _splitTime3Word($event, $index){
         $res = "";
-        for($i=0 ;$i < count($arr); $i+=3){
-            $res.="<div>";
-            for($j=$i; $j<$i+3 && $j < count($arr); $j++){
-                $res.=$arr[$j] . " ";
+        for($i=1; $i<=5; $i++){
+            $suffix = "_".$index."_".$i;
+            if($event[("opentime_day_hour_start".$suffix)] !="" && $event[("opentime_day_minute_start".$suffix)] !="" &&
+                $event[("opentime_day_hour_end".$suffix)] !="" && $event[("opentime_day_minute_end".$suffix)] !="")
+            {
+                $res.=$this->_prefixZero($event[("opentime_day_hour_start".$suffix)]).
+                    ":".$this->_prefixZero($event[("opentime_day_minute_start".$suffix)]);
+                $res.="〜".$this->_prefixZero($event[("opentime_day_hour_end".$suffix)])
+                    .":".$this->_prefixZero($event[("opentime_day_minute_end".$suffix)]) . "　";
             }
-            $res.="</div>";
         }
-        return $res;
+
+        return "<div>". $res . "</div>";
+    }
+
+    private function _prefixZero($str){
+        return strlen($str) < 2 ? "0".$str:$str;
     }
 
     private function _dayOfWeek($str){
@@ -64,25 +63,28 @@ class Event extends Model
     public function displayOpenDates(){
         $str = "";
         try{
-            if($this->open_date){
-                $s = "<div>" . date('Y年m月d日 ', strtotime($this->open_date)). $this->_dayOfWeek($this->open_date). "</div>";
-                $str = $str . $s . $this->_splitTime3Word($this->open_date_time);
-            }
-            if($this->open_date2){
-                $s = "<div>" . date('Y年m月d日 ', strtotime($this->open_date2)) . $this->_dayOfWeek($this->open_date2). "</div>";
-                $str = $str . $s . $this->_splitTime3Word($this->open_date_time2);
-            }
-            if($this->open_date3){
-                $s = "<div>" . date('Y年m月d日 ', strtotime($this->open_date3)) .$this->_dayOfWeek($this->open_date3).  "</div>";
-                $str = $str . $s . $this->_splitTime3Word($this->open_date_time3);
-            }
-            if($this->open_date4){
-                $s = "<div>" . date('Y年m月d日 ', strtotime($this->open_date4)) . $this->_dayOfWeek($this->open_date4). "</div>";
-                $str = $str . $s . $this->_splitTime3Word($this->open_date_time4);
-            }
-            if($this->open_date5){
-                $s = "<div>" . date('Y年m月d日 ', strtotime($this->open_date5)) . $this->_dayOfWeek($this->open_date5). "</div>";
-                $str = $str . $s . $this->_splitTime3Word($this->open_date_time5);
+            for($i=1; $i<=5; $i++){
+                $s = "";
+                $event = $this;
+                if($i==1){
+                    if($this->open_date){
+                        $s = "<div>" . date('Y年m月d日 ', strtotime($this->open_date)). $this->_dayOfWeek($this->open_date). "</div>";
+                        $s.=$this->_splitTime3Word($event, 1);
+                        if($event[("comment_day_".$i)]){
+                            $s.="<div>".nl2br($event[("comment_day_".$i)])."</div>";
+                        }
+                    }
+                }
+                else{
+                    if($event[("open_date".$i)]){
+                        $s = "<div>" . date('Y年m月d日 ', strtotime($event[("open_date".$i)])). $this->_dayOfWeek($event[("open_date".$i)]). "</div>";
+                        $s.=$this->_splitTime3Word($event, $i);
+                        if($event[("comment_day_".$i)]){
+                            $s.="<div>".nl2br($event[("comment_day_".$i)])."</div>";
+                        }
+                    }
+                }
+                $str = $str . $s;
             }
             return $str;
 

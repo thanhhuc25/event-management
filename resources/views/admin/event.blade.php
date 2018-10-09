@@ -6,6 +6,7 @@
 
 @section('header')
     <link href="{{ asset('assets/bootstrap-3/css/bootstrap-datetimepicker.css') }}" rel="stylesheet">
+    <script src="//ajaxzip3.github.io/ajaxzip3.js" charset="UTF-8"></script>
 @endsection
 
 @section('content')
@@ -75,118 +76,89 @@
                                                id="phone" name="phone" placeholder="電話番号">
                                     </div>
                                 </div>
+                                <div class="col-xs-12 col-md-6">
+                                    <div class="form-group">
+                                        <label>郵便番号</label>
+                                        <div>
+                                            〒
+                                            <input value="{{$event->zip01}}" maxlength="3" type="text" id="zip01" name="zip01" pattern="\d*" class="form-control zip-c" placeholder="141">
+                                            -
+                                            <input value="{{$event->zip02}}" maxlength="4" type="text" id="zip02" name="zip02" pattern="\d*" class="form-control zip-c" placeholder="0032">
+                                            <button class="btn bn-sm btn-success" id="btn-auto-zip">郵便番号から自動入力</button>
+                                        </div>
+                                    </div>
+                                </div>
 
                             </div>
                             <!-- 開催時間-->
-                            <div class="row">
-                                <div class="col-xs-12 col-md-3">
-                                    <div class="form-group">
-                                        <label for="open_date">{{"開催日付"}}</label>
-                                        <div class='input-group date' id='open_date'>
-                                            <input type='text' class="form-control" name="open_date" value="{{$event->open_date}}" />
-                                            <span class="input-group-addon">
+                            @for ($i = 1; $i <= 5; $i++)
+                                <div class="row">
+                                    <div class="col-xs-12 col-md-3">
+                                        <div class="form-group">
+                                            <label for="open_date">{{"開催日付"}}</label>
+                                            <div class='input-group date' id='open_date{{$i==1?"":$i}}'>
+                                                <input type='text' class="form-control" name="open_date{{$i==1?"":$i}}"
+                                                       value="{{$event["open_date".($i==1?"":$i)]}}" placeholder="2018-10-01" />
+                                                <span class="input-group-addon">
                                                 <span class="glyphicon glyphicon-calendar"></span>
                                             </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-12 col-md-9">
+                                        <div class="form-group">
+                                            <label for="open_date{{$i==1?"":$i}}">{{"時間"}}</label>
+                                            <div>
+                                                @for ($j = 1; $j <= 5; $j++)
+                                                    <div class="hour-minute-items">
+                                                        <select class="form-control" name="opentime_day_hour_start_{{$i}}_{{$j}}" >
+                                                            <option value="">時</option>
+                                                            @for($h=0; $h<=24; $h++)
+                                                                <option value="{{$h}}"
+                                                                        {{ $event[("opentime_day_hour_start_".$i."_".$j)]!="" && $event[("opentime_day_hour_start_".$i."_".$j)]==$h ? "selected" : ""}} >
+                                                                    {{$h<10 ? "0".$h : $h}}
+                                                                </option>
+                                                            @endfor
+                                                        </select>
+                                                        <select class="form-control" name="opentime_day_minute_start_{{$i}}_{{$j}}">
+                                                            <option value="">分</option>
+                                                            @for($m=0; $m<=45; $m+=15)
+                                                                <option value="{{$m}}"
+                                                                        {{ $event[("opentime_day_minute_start_".$i."_".$j)]!="" && $event[("opentime_day_minute_start_".$i."_".$j)]==$m ? "selected" : ""}}>{{$m<10 ? "0".$m : $m}}</option>
+                                                            @endfor
+                                                        </select>
+                                                        <label>〜</label>
+                                                        <select class="form-control"  name="opentime_day_hour_end_{{$i}}_{{$j}}">
+                                                            <option value="">時</option>
+                                                            @for($h=0; $h<=24; $h++)
+                                                                <option value="{{$h}}"
+                                                                        {{$event[("opentime_day_hour_end_".$i."_".$j)]!=""&& $event[("opentime_day_hour_end_".$i."_".$j)]==$h ? "selected" : ""}}>{{$h<10 ? "0".$h : $h}}</option>
+                                                            @endfor
+                                                        </select>
+                                                        <select class="form-control" name="opentime_day_minute_end_{{$i}}_{{$j}}">
+                                                            <option value="">分</option>
+                                                            @for($m=0; $m<=45; $m+=15)
+                                                                <option value="{{$m}}"
+                                                                        {{
+                                                                        $event[("opentime_day_minute_end_".$i."_".$j)]!=""&&
+                                                                        $event[("opentime_day_minute_end_".$i."_".$j)]==$m ? "selected" : ""}}>{{$m<10 ? "0".$m : $m}}</option>
+                                                            @endfor
+                                                        </select>
+                                                    </div>
+                                                @endfor
+                                            </div>
+                                            <div>
+                                                <textarea placeholder="備考" class="form-control" name="comment_day_{{$i}}">{{$event[("comment_day_".$i)]}}</textarea>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-xs-12 col-md-9">
-                                    <div class="form-group">
-                                        <label for="open_date">{{"時間"}}</label>
-                                        <div >
-                                            <input placeholder="10:00～12:00, 13:00～14:00" type='text' name="open_date_time" class="form-control" value="{{$event->open_date_time}}" />
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-xs-12 col-md-3">
-                                    <div class="form-group">
-                                        <label for="open_date2">{{"開催日付"}}</label>
-                                        <div class='input-group date' id='open_date2'>
-                                            <input type='text' class="form-control" name="open_date2" value="{{$event->open_date2}}" />
-                                            <span class="input-group-addon">
-                                                <span class="glyphicon glyphicon-calendar"></span>
-                                            </span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-xs-12 col-md-9">
-                                    <div class="form-group">
-                                        <label for="open_date2">{{"時間"}}</label>
-                                        <div >
-                                            <input placeholder="10:00～12:00, 13:00～14:00" type='text' name="open_date_time2" class="form-control" value="{{$event->open_date_time2}}" />
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-xs-12 col-md-3">
-                                    <div class="form-group">
-                                        <label for="open_date3">{{"開催日付"}}</label>
-                                        <div class='input-group date' id='open_date3'>
-                                            <input type='text' class="form-control" name="open_date3" value="{{$event->open_date3}}" />
-                                            <span class="input-group-addon">
-                                                <span class="glyphicon glyphicon-calendar"></span>
-                                            </span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-xs-12 col-md-9">
-                                    <div class="form-group">
-                                        <label for="open_date3">{{"時間"}}</label>
-                                        <div >
-                                            <input placeholder="10:00～12:00, 13:00～14:00" type='text' name="open_date_time3" class="form-control" value="{{$event->open_date_time3}}" />
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-xs-12 col-md-3">
-                                    <div class="form-group">
-                                        <label for="open_date4">{{"開催日付"}}</label>
-                                        <div class='input-group date' id='open_date4'>
-                                            <input type='text' class="form-control" name="open_date4" value="{{$event->open_date4}}" />
-                                            <span class="input-group-addon">
-                                                <span class="glyphicon glyphicon-calendar"></span>
-                                            </span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-xs-12 col-md-9">
-                                    <div class="form-group">
-                                        <label for="open_date4">{{"時間"}}</label>
-                                        <div >
-                                            <input placeholder="10:00～12:00, 13:00～14:00" type='text' name="open_date_time4" class="form-control" value="{{$event->open_date_time4}}" />
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-xs-12 col-md-3">
-                                    <div class="form-group">
-                                        <label for="open_date5">{{"開催日付"}}</label>
-                                        <div class='input-group date' id='open_date5'>
-                                            <input type='text' class="form-control" name="open_date5" value="{{$event->open_date5}}" />
-                                            <span class="input-group-addon">
-                                                <span class="glyphicon glyphicon-calendar"></span>
-                                            </span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-xs-12 col-md-9">
-                                    <div class="form-group">
-                                        <label for="open_date5">{{"時間"}}</label>
-                                        <div >
-                                            <input placeholder="10:00～12:00, 13:00～14:00" type='text' name="open_date_time5" class="form-control" value="{{$event->open_date_time5}}" />
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                            @endfor
+
                             <!-- ./開催時間-->
                             <div class="row">
                                 <div class="col-xs-12">
-                                    <label>{{"メディア"}}</label>
+                                    <label>{{"画像アップロード"}}</label>
                                     <div id="form-upload" style="display: none">
                                         <div>
                                             <a id="upload" class="btn btn-success btn-sm" @click="upload()">
@@ -197,7 +169,7 @@
                                             <div class="flex-c-i" v-for="(media, index) in medias"
                                                  v-bind:key="index" v-show="media.path">
                                                 <div class="text-center photo-c">
-                                                    <input accept=".jpg,.jpeg.,.png,.mov,.mp4"
+                                                    <input accept=".jpg,.jpeg.,.png"
                                                            @change="changeFile(index, $event)"
                                                            type="file" v-bind:name="('upload_file_'+index)"
                                                            v-bind:id="('upload_file_'+index)"
@@ -225,6 +197,11 @@
                                 <div class="col-xs-12">
                                     <br/>
                                     <label>マップ</label>
+                                    <div class="form-inline" style="margin-bottom: 20px">
+					<div class="small" style="padding-left:10px;">
+						Googleマップの「共有リンク」を入力してください。
+					</div>
+                                    </div>
                                     <div>
                                         <a class="btn btn-sm btn-primary"
                                            href="https://www.google.com/maps/"
@@ -232,14 +209,14 @@
                                             {{"住所情報を取得する"}}
                                         </a>
                                         <div class="map-link-input">
-                                            <label>Googleマップのリンク</label>
+                                            <label>Googleマップの「共有リンク」を入力</label>
                                             <input id="google_map_link" name="google_map_link"
                                                    value="{{$event->google_map_link}}"
-                                                   class="form-control" placeholder="Googleマップのリンク">
+                                                   class="form-control" placeholder="Googleマップの「共有リンク」を入力（https://goo.gl/maps/ZxTPPu4aAZ82　など）">
                                         </div>
                                     </div>
                                     <br/>
-                                    <div class="form-inline" style="margin-bottom: 20px">
+                                    <div class="form-inline" style="margin-bottom: 20px; display:none;">
                                         <div class="form-group">
                                             <label for="lat">Latitude</label>
                                             <input type="text" class="form-control"
@@ -251,7 +228,7 @@
                                                    id="long" name="long" placeholder="Longitude">
                                         </div>
                                     </div>
-                                    <div id="map"></div>
+                                    <div id="map" style="display:none;"></div>
                                 </div>
                             </div>
                             <div class="row">
@@ -259,7 +236,8 @@
                                     <br/>
                                     <div class="form-group">
                                         <label for="comment">{{"コメント"}}</label>
-                                        <textarea rows="4" placeholder="コメント" class="form-control" id="comment" name="comment">{{$event->comment}}</textarea>
+                                        <textarea rows="4" placeholder="コメント"
+                                                  class="form-control" id="comment" name="comment">{{$event->comment}}</textarea>
                                     </div>
                                 </div>
                             </div>
@@ -353,7 +331,7 @@
                             $(id).datetimepicker({
                                 format: 'YYYY-MM-DD',
                                 minDate: moment().format("YYYY-MM-DD 00:00:00"),
-                                maxDate: moment().add(60, 'days'),
+                                maxDate: moment().add(365, 'days'),
                                 useCurrent: false
                             });
                         }catch (err){
@@ -386,6 +364,12 @@
                         return false;
                     }
                 });
+                // auto zip
+                $('#btn-auto-zip').click(function(e) {
+                    e.preventDefault();
+                    AjaxZip3.zip2addr('zip01', 'zip02', 'province_id', 'position');
+                });
+
             }
         });
 
@@ -478,19 +462,23 @@
             }
         }
 
-        $("#google_map_link").change(function () {
-            var _url = $(this).val();
-            onChangeGooleMapLink(_url);
-        });
-        $("#google_map_link").keyup(function () {
-            var _url = $(this).val();
-            onChangeGooleMapLink(_url);
-
-        });
+//        $("#google_map_link").change(function () {
+//            var _url = $(this).val();
+//            onChangeGooleMapLink(_url);
+//        });
+//        $("#google_map_link").keyup(function () {
+//            var _url = $(this).val();
+//            onChangeGooleMapLink(_url);
+//        });
         function changeLatLong() {
             // prevent enter input submit
             $(window).keydown(function(event){
+
+
                 if(event.keyCode == 13) {
+                    if($(event.target).prop("tagName").toLocaleLowerCase()=="textarea"){
+                        return true;
+                    }
                     event.preventDefault();
                     if($(event.target).attr("id")){
                         var id = $(event.target).attr("id");

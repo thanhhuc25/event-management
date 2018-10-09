@@ -72,3 +72,14 @@ body{
 .map-link-input{
     padding-top: 10px;
 }
+.zip-c {
+    display: inline-block;
+    width: 80px;
+}
+.hour-minute-items {
+    margin-bottom: 10px;
+}
+.hour-minute-items .form-control{
+    display: inline-block;
+    width: 80px;
+}

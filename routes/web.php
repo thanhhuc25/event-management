@@ -11,6 +11,11 @@
 |
 */
 
+
+if(config('app.env') === 'production'){
+//    URL::forceScheme('https');
+}
+
 //Route::get('/', function () {
 //    return view('home');
 //});
