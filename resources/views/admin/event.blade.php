@@ -109,11 +109,11 @@
                                     </div>
                                     <div class="col-xs-12 col-md-9">
                                             <div class="form-group">
-                                                <label for="open_date{{$i==1?"":$i}}">{{"イベント毎の時間（最大5件登録できます）"}}</label>
+                                                <label for="open_date{{$i==1?"":$i}}">{{"開催時間（最大5件登録できます）"}}</label>
                                                 <div>
                                                     @for ($j = 1; $j <= 5; $j++)
                                                         <div class="hour-minute-items">
-                                                            <label>イベント{{$j}}回目：</label>
+                                                            <label>{{$j}}回目：</label>
                                                             <select class="form-control" name="opentime_day_hour_start_{{$i}}_{{$j}}" >
                                                                 <option value="">時</option>
                                                                 @for($h=0; $h<=24; $h++)
@@ -125,7 +125,7 @@
                                                             </select>
                                                             <select class="form-control" name="opentime_day_minute_start_{{$i}}_{{$j}}">
                                                                 <option value="">分</option>
-                                                                @for($m=0; $m<=45; $m+=15)
+                                                                @for($m=0; $m<=30; $m+=30)
                                                                     <option value="{{$m}}"
                                                                             {{ $event[("opentime_day_minute_start_".$i."_".$j)]!="" && $event[("opentime_day_minute_start_".$i."_".$j)]==$m ? "selected" : ""}}>{{$m<10 ? "0".$m : $m}}</option>
                                                                 @endfor
@@ -140,7 +140,7 @@
                                                             </select>
                                                             <select class="form-control" name="opentime_day_minute_end_{{$i}}_{{$j}}">
                                                                 <option value="">分</option>
-                                                                @for($m=0; $m<=45; $m+=15)
+                                                                @for($m=0; $m<=30; $m+=30)
                                                                     <option value="{{$m}}"
                                                                             {{
                                                                             $event[("opentime_day_minute_end_".$i."_".$j)]!=""&&

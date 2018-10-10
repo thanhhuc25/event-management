@@ -29,6 +29,7 @@
             {!! nl2br( $event->comment) !!}
         </div>
     </h2>
+    @if($event->medias)
     <div class="f-section f-section--home">
         <ul class="m-list_box f-flex f-flex_mb30">
             @foreach($event->medias as $media)
@@ -45,7 +46,8 @@
             @endforeach
         </ul>
     </div>
-    <div class="f-section">
+    @endif
+    <div class="f-section_s">
         <ul class="m-list_box f-flex f-flex_mb30 no-print-btn">
             <li class="f-flex6 bg-white no-bg">
                 @if($event->google_map_link)
@@ -57,8 +59,8 @@
                 </div>
                 @endif
             </li>
-            <li class="f-flex6">
-                <div class="bg-white" style="text-align: right;">
+            <li class="f-flex6 f-display_m">
+                <div class="bg-white f-display_m" style="text-align: right;">
                     <a class="a-btn a-btn_arrow a-btn_main btn-print"
                             data-short="{{$event->google_map_link ? $event->google_map_link : 'https://www.google.com/maps?q='.$event->lat.','.$event->long}}"
                             data-lat="{{$event->lat}}"
