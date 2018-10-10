@@ -150,7 +150,10 @@ class AdminEventController extends Controller
         }
 
         $user = Auth::user();
-        $event->user_created_id = $user->id;
+        if($isNewEvent){
+            $event->user_created_id = $user->id;
+        }
+
         $event->save();
         if($isNewEvent){
             $this->_uploadFiles($request, $event);
