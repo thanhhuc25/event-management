@@ -116,26 +116,36 @@ class AdminEventController extends Controller
             try{
                 $event->open_date = $request->input("open_date");
             }catch (\Exception $exception){}
+        } else{
+            $event->open_date = null;
         }
         if($request->input("open_date2", "")){
             try{
                 $event->open_date2 = $request->input("open_date2");
             }catch (\Exception $exception){}
+        }else{
+            $event->open_date2 = null;
         }
         if($request->input("open_date3", "")){
             try{
                 $event->open_date3 = $request->input("open_date3");
             }catch (\Exception $exception){}
+        }else{
+            $event->open_date3 = null;
         }
         if($request->input("open_date4", "")){
             try{
                 $event->open_date4 = $request->input("open_date4");
             }catch (\Exception $exception){}
+        }else{
+            $event->open_date4 = null;
         }
         if($request->input("open_date5", "")){
             try{
                 $event->open_date5 = $request->input("open_date5");
             }catch (\Exception $exception){}
+        }else{
+            $event->open_date5 = null;
         }
         for($row=1; $row<=5; $row++){
             $colSuffix = "_".$row;
