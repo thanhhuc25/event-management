@@ -50,9 +50,11 @@ Route::group(["prefix" => "admin", 'middleware' => 'auth'], function (){
     Route::any('/account/delete/{id}', "AdminAccountController@delete")->name("adminAccountDelete");
 
     // Display view
-    Route::get('datatable', 'DataTableController@datatable');
+    Route::post('datatable', 'DataTableController@datatable');
+    //Route::post('datatable', 'DataTableController@datatable');
     // Get Data
-    Route::get('datatable/getdata', 'DataTableController@getEvents')->name('datatable/getdata');
+    Route::post('datatable/getdata', 'DataTableController@getEvents')->name('datatable/getdata');
+    //Route::post('datatable/getdata', 'DataTableController@getEvents')->name('datatable/getdata');
 
     // Display view
     Route::get('datatable-user', 'DataTableUsersController@datatable');
