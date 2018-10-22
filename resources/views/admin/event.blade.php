@@ -20,12 +20,12 @@
                         </h3>
                     </div>
                     <div class="card-body">
-                        <form method="post" action="" class="" enctype="multipart/form-data">
+                        <form method="post" action="" class="" enctype="multipart/form-data" id="form-save">
                             @csrf
                             <div class="row">
                                 <div class="col-xs-12 col-md-6">
-                                    <div class="form-group">
-                                        <label for="shop_name">{{"ショップ名"}}</label>
+                                    <div class="form-group" id="shop_name-container">
+                                        <label for="shop_name">{{"ショップ名"}}*</label>
                                         <input type="text" class="form-control" value="{{$event->shop_name}}"
                                                id="shop_name" name="shop_name" placeholder="ショップ名">
                                     </div>
@@ -77,17 +77,17 @@
                             <div class="row">
                                 <div class="col-xs-12 col-md-6">
                                     <div class="form-group">
-                                        <label for="position">{{"住所"}}</label>
+                                        <label for="position">{{"開催場所"}}</label>
                                         <input type="text" class="form-control" value="{{$event->position}}"
-                                               id="position" name="position" placeholder="住所">
+                                               id="position" name="position" placeholder="開催場所">
                                     </div>
                                 </div>
                                 <div class="col-xs-12 col-md-6">
 
                                     <div class="form-group">
-                                        <label for="phone">{{"電話番号"}}</label>
+                                        <label for="phone">{{"連絡先"}}</label>
                                         <input type="text" class="form-control" value="{{$event->phone}}"
-                                               id="phone" name="phone" placeholder="電話番号">
+                                               id="phone" name="phone" placeholder="連絡先">
                                     </div>
                                 </div>
 
@@ -97,7 +97,7 @@
                                 <div class="row">
                                     <div class="col-xs-12 col-md-3">
                                         <div class="form-group">
-                                            <label for="open_date">{{"開催日付"}}</label>
+                                            <label for="open_date">{{"開催日（".$i."日目）"}}</label>
                                             <div class='input-group date' id='open_date{{$i==1?"":$i}}'>
                                                 <input type='text' class="form-control" name="open_date{{$i==1?"":$i}}"
                                                        value="{{$event["open_date".($i==1?"":$i)]}}" placeholder="2018-10-01" />
@@ -250,8 +250,11 @@
                             <div class="text-center">
                                 <br>
                                 <button class="btn btn-primary">{{"保存"}}</button>
-                                <a id="delete" href="{{route("adminEventDelete",["id"=>$event->id])}}" class="btn btn-danger" style="float: right" >削除</a>
+                                @if ($event->id != 0)
+                                    <a id="delete" href="{{route("adminEventDelete",["id"=>$event->id])}}" class="btn btn-danger" style="float: right" >削除</a>
+                                @endif
                             </div>
+
                         </form>
                     </div>
                 </div>
@@ -265,8 +268,8 @@
 </script>
 <script src="{{asset("assets/bootstrap-datetimepicker.js")}}">
 </script>
-{{--<script src="{{asset("assets/vue.min.js")}}"></script>--}}
-<script src="{{asset("assets/vue.js")}}"></script>
+<script src="{{asset("assets/vue.min.js")}}"></script>
+{{--<script src="{{asset("assets/vue.js")}}"></script>--}}
 <script>
     $(document).ready(function () {
 
@@ -278,7 +281,9 @@
             },
             computed: {
               sortedMedias: function () {
-                  return this.medias.sort((a, b) => a.precedence < b.precedence );
+                  return this.medias.sort(function (a,b) {
+                      return a.precedence < b.precedence;
+                  });
               }
             },
             methods: {
@@ -347,11 +352,7 @@
                             });
                         }
                     }
-
-
                 }
-
-
                 $("#form-upload").show();
                 var self = this;
                 $.ajax({
@@ -379,134 +380,47 @@
             }
         });
 
+        $(window).keydown(function(event){
+            if(event.keyCode == 13) {
+                if($(event.target).prop("tagName").toLocaleLowerCase()=="textarea"){
+                    return true;
+                }
+                event.preventDefault();
+                return false;
+            }
+        });
+        // form validate
+        $("#form-save").on("submit", function (e) {
+           if($("#shop_name").val().length < 1){
+               $("#shop_name-container").addClass("has-error");
+               $('html, body').animate({
+                   scrollTop: $("#shop_name-container").offset().top
+               }, 1000);
+               e.preventDefault();
+               return false;
+           }
+           var isHasDate = false;
+           for(var _i = 1; _i <= 5; _i++){
+               var selector = "open_date";
+               if(_i!=1){
+                   selector+=_i;
+               }
+               if($("input[name='"+selector+"']").val()){
+                   isHasDate = true;
+               }
+           }
+           if(!isHasDate){
+               $("#open_date").addClass("has-error");
+               $('html, body').animate({
+                   scrollTop: $("#open_date").offset().top
+               }, 1000);
+               e.preventDefault();
+               return false;
+           }
+           return true;
+        });
+
     });
-</script>
-<script>
-    var marker = false;
-    var center = {lat: "{{$event->lat ? $event->lat : 35.652832 }}", lng: "{{$event->long ? $event->long : 139.839478}}"};
-    center.lat = Number(center.lat);
-    center.lng = Number(center.lng);
-
-    function getLatLongFromUrl(url) {
-        try{
-            var indexA = url.indexOf("@");
-            var lon = 0;
-            var lat = 0;
-            if(indexA >-1){
-                url = url.substr(indexA+1);
-                var indexFirst = url.indexOf(",");
-                if(indexFirst > -1){
-                    lat = url.substr(0,indexFirst);
-                    url = url.substr(indexFirst+1);
-                    var index2 = url.indexOf(",");
-                    if(index2 > -1){
-                        lon = url.substr(0,index2);
-                    }
-                }
-
-            }
-            if(lat!=0 && lon!=0){
-                var __res = {
-                    lat: Number(lat),
-                    lng: Number(lon)
-                };
-                return __res;
-            }
-            return null;
-
-        }catch (err){
-            return null;
-        }
-    }
-
-    function initMap() {
-        var map = new google.maps.Map(document.getElementById('map'), {
-            center: center,
-            zoom: 11,scrollwheel: false
-        });
-        marker = new google.maps.Marker({
-            position: center,
-            map: map,
-            draggable: true
-        });
-        markerLocation();
-        google.maps.event.addListener(marker, 'dragend', function(event){
-            markerLocation();
-        });
-        if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition(function(position) {
-                var pos = {
-                    lat: position.coords.latitude,
-                    lng: position.coords.longitude
-                };
-                map.setCenter(pos);
-                marker.setPosition(pos);
-                markerLocation();
-            }, function() {
-            });
-        } else {
-        }
-        google.maps.event.addListener(map, 'click', function(event) {
-            var clickedLocation = event.latLng;
-            marker.setPosition(clickedLocation);
-            markerLocation();
-        });
-        function markerLocation(){
-            var currentLocation = marker.getPosition();
-            $("#lat").val(currentLocation.lat());
-            $("#long").val(currentLocation.lng());
-        }
-        
-        function onChangeGooleMapLink(__url) {
-            var latLong = getLatLongFromUrl(__url);
-            if(latLong){
-                map.setCenter(latLong);
-                marker.setPosition(latLong);
-                $("#lat").val(latLong.lat);
-                $("#long").val(latLong.lng);
-                //markerLocation();
-            }
-        }
-
-//        $("#google_map_link").change(function () {
-//            var _url = $(this).val();
-//            onChangeGooleMapLink(_url);
-//        });
-//        $("#google_map_link").keyup(function () {
-//            var _url = $(this).val();
-//            onChangeGooleMapLink(_url);
-//        });
-        function changeLatLong() {
-            // prevent enter input submit
-            $(window).keydown(function(event){
-
-
-                if(event.keyCode == 13) {
-                    if($(event.target).prop("tagName").toLocaleLowerCase()=="textarea"){
-                        return true;
-                    }
-                    event.preventDefault();
-                    if($(event.target).attr("id")){
-                        var id = $(event.target).attr("id");
-                        if(id=="lat" || id == "long"){
-                            var _pos = {
-                                lat: Number($("#lat").val()),
-                                lng: Number($("#long").val())
-                            };
-                            map.setCenter(_pos);
-                            marker.setPosition(_pos);
-                            markerLocation();
-                        }
-                    }
-                    return false;
-                }
-            });
-        }
-        changeLatLong();
-    }
-</script>
-<script async defer
-        src="https://maps.googleapis.com/maps/api/js?key={{Config::get('app.google_map_key')}}&callback=initMap">
 </script>
 <style>
     .media-image{

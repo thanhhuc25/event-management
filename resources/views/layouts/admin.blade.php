@@ -32,7 +32,7 @@
 
 </div>
 
-<script src="{{asset("js/jquery.min.js")}}"></script>
+<script src="{{asset("js/jquery-1.12.4.min.js")}}"></script>
 <script src="{{asset("assets/bootstrap-3/js/bootstrap.min.js")}}"></script>
 @yield('footer', "")
 </body>
