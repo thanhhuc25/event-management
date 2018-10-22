@@ -97,4 +97,9 @@
             });
         });
     </script>
+    <style>
+        #events-table > tbody > tr > td:nth-child(4){
+            text-align: left;
+        }
+    </style>
 @endsection

@@ -167,12 +167,12 @@ class AdminEventController extends Controller
         $event->save();
         if($isNewEvent){
             $this->_uploadFiles($request, $event);
-            Session::flash('message', 'イベンドが作成しました');
+            Session::flash('message', 'イベントを作成しました');
             return Redirect::route("adminEventList");
         } else{
             //upload file
             $this->_uploadFiles($request, $event);
-            Session::flash('message', 'イベンドが編集しました');
+            Session::flash('message', 'イベントを編集しました');
             return Redirect::route("adminEventEdit",["id"=>$event->id]);
         }
     }

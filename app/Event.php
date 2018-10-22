@@ -24,7 +24,34 @@ class Event extends Model
 
     public function displayOpenDate(){
         if($this->open_date){
-            return date('Y年m月d日', strtotime($this->open_date));
+            $res =  date('Y年m月d日', strtotime($this->open_date));
+            $e = $this;
+            for($i=1; $i<=5;$i++){
+                if(strlen($e[("opentime_day_hour_start_1_".$i)]) > 0 &&  strlen($e[("opentime_day_minute_start_1_".$i)])>0){
+                    $h = $e[("opentime_day_hour_start_1_".$i)];
+                    if(strlen($h)<2){
+                        $h="0$h";
+                    }
+                    $m = $e[("opentime_day_minute_start_1_".$i)];
+                    if(strlen($m)<2){
+                        $m="0".$m;
+                    }
+                    $res.= " ".$h.":".$m;
+                    if(strlen($e[("opentime_day_hour_end_1_".$i)]) > 0 &&  strlen($e[("opentime_day_minute_end_1_".$i)])>0){
+                        $h2 = $e[("opentime_day_hour_end_1_".$i)];
+                        if(strlen($h2)<2){
+                            $h2="0".$h2;
+                        }
+                        $m2 = $e[("opentime_day_minute_end_1_".$i)];
+                        if(strlen($m2)<2){
+                            $m2="0".$m2;
+                        }
+                        $res.= " ~ ".$h2.":".$m2;
+                    }
+                    break;
+                }
+            }
+            return $res;
         }
         return "";
     }
