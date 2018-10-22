@@ -108,7 +108,7 @@
                                         </div>
                                     </div>
                                     <div class="col-xs-12 col-md-9">
-                                            <div class="form-group">
+                                            <div class="form-group" id="check-times-{{$i}}">
                                                 <label for="open_date{{$i==1?"":$i}}">{{"開催時間（最大5件登録できます）"}}</label>
                                                 <div>
                                                     @for ($j = 1; $j <= 5; $j++)
@@ -406,11 +406,21 @@
                    selector+=_i;
                }
                if($("input[name='"+selector+"']").val()){
-                   isHasDate = true;
+                   var checkTimesSelector = "#check-times-"+_i;
+                   for(var _j=1; _j <=5; _j++){
+                       var $startHour = $(checkTimesSelector).find("select[name='opentime_day_hour_start_"+_i+"_"+_j+"']");
+                       var $startMinute = $(checkTimesSelector).find("select[name='opentime_day_minute_start_"+_i+"_"+_j+"']");
+                       if($startHour.val() && $startMinute.val()){
+                           isHasDate = true;
+                           break;
+                       }
+                   }
                }
            }
            if(!isHasDate){
                $("#open_date").addClass("has-error");
+               $("select[name='opentime_day_hour_start_1_1']").css("border-color", "#a94442");
+               $("select[name='opentime_day_minute_start_1_1']").css("border-color", "#a94442");
                $('html, body').animate({
                    scrollTop: $("#open_date").offset().top
                }, 1000);

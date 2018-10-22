@@ -14,13 +14,13 @@
             </div>
         </div>
         <div class="a-ttl_txt">
-            住　　所：
+            開催場所：
             <span>
                   {{$event->province ? $event->province->name : ""}}{{$event->position}}
                 </span>
         </div>
         <div class="a-ttl_txt">
-            電話番号：
+            連絡先&nbsp;&nbsp;&nbsp;&nbsp;：
             <span>
                   {{$event->phone}}
                 </span>
