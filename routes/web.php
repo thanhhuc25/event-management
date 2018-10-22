@@ -57,8 +57,8 @@ Route::group(["prefix" => "admin", 'middleware' => 'auth'], function (){
     //Route::post('datatable/getdata', 'DataTableController@getEvents')->name('datatable/getdata');
 
     // Display view
-    Route::get('datatable-user', 'DataTableUsersController@datatable');
+    Route::post('datatable-user', 'DataTableUsersController@datatable');
     // Get Data
-    Route::get('datatable-user/getdata', 'DataTableUsersController@getUsers')->name('datatable-user/getdata');
+    Route::post('datatable-user/getdata', 'DataTableUsersController@getUsers')->name('datatable-user/getdata');
 });
 
