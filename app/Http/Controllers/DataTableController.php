@@ -43,7 +43,7 @@ class DataTableController extends Controller
                 return "";
             })
             ->editColumn('open_date', function ($e) {
-                return $e->displayOpenDate();
+                return $e->displayOpenDatesAdmin();
             })
             ->addColumn('creator', function ($e) use ($user){
                 if($user->is_admin==1 && $e->user_created_id){
@@ -51,7 +51,7 @@ class DataTableController extends Controller
                 }
                 return "";
             })
-            ->rawColumns(['creator', 'action'])
+            ->rawColumns(['creator', 'action', 'open_date'])
             ->addIndexColumn()
             ->make(true);
     }

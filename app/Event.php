@@ -72,6 +72,30 @@ class Event extends Model
 
         return "<div>". $res . "</div>";
     }
+    private function _splitTime3WordAdmin($event, $index){
+        $res = "";
+        $count = 0;
+        for($i=1; $i<=5; $i++){
+            $suffix = "_".$index."_".$i;
+            if($event[("opentime_day_hour_start".$suffix)] !="" && $event[("opentime_day_minute_start".$suffix)] !=""
+                )
+            {
+                $count++;
+                $res.=$this->_prefixZero($event[("opentime_day_hour_start".$suffix)]).
+                    ":".$this->_prefixZero($event[("opentime_day_minute_start".$suffix)]);
+                if($event[("opentime_day_hour_end".$suffix)] !="" && $event[("opentime_day_minute_end".$suffix)] !=""){
+                    $res.="〜".$this->_prefixZero($event[("opentime_day_hour_end".$suffix)])
+                        .":".$this->_prefixZero($event[("opentime_day_minute_end".$suffix)]) . "　";
+                }
+                if($count >= 2){
+                    $res.="<br/>";
+                    $count = 0;
+                }
+            }
+        }
+
+        return "<div style='white-space: nowrap'>". $res . "</div>";
+    }
 
     private function _prefixZero($str){
         return strlen($str) < 2 ? "0".$str:$str;
@@ -109,6 +133,32 @@ class Event extends Model
                         if($event[("comment_day_".$i)]){
                             $s.="<div>".nl2br($event[("comment_day_".$i)])."</div>";
                         }
+                    }
+                }
+                $str = $str . $s;
+            }
+            return $str;
+
+        }catch (\Exception $e){
+            return $str;
+        }
+    }
+    public function displayOpenDatesAdmin(){
+        $str = "";
+        try{
+            for($i=1; $i<=5; $i++){
+                $s = "";
+                $event = $this;
+                if($i==1){
+                    if($this->open_date){
+                        $s = "<div>" . date('Y年m月d日 ', strtotime($this->open_date)). $this->_dayOfWeek($this->open_date). "</div>";
+                        $s.=$this->_splitTime3WordAdmin($event, 1);
+                    }
+                }
+                else{
+                    if($event[("open_date".$i)]){
+                        $s = "<div>" . date('Y年m月d日 ', strtotime($event[("open_date".$i)])). $this->_dayOfWeek($event[("open_date".$i)]). "</div>";
+                        $s.=$this->_splitTime3WordAdmin($event, $i);
                     }
                 }
                 $str = $str . $s;
