@@ -60,13 +60,17 @@ class Event extends Model
         $res = "";
         for($i=1; $i<=5; $i++){
             $suffix = "_".$index."_".$i;
-            if($event[("opentime_day_hour_start".$suffix)] !="" && $event[("opentime_day_minute_start".$suffix)] !="" &&
-                $event[("opentime_day_hour_end".$suffix)] !="" && $event[("opentime_day_minute_end".$suffix)] !="")
+            if($event[("opentime_day_hour_start".$suffix)] !="" && $event[("opentime_day_minute_start".$suffix)] !="")
             {
                 $res.=$this->_prefixZero($event[("opentime_day_hour_start".$suffix)]).
                     ":".$this->_prefixZero($event[("opentime_day_minute_start".$suffix)]);
-                $res.="〜".$this->_prefixZero($event[("opentime_day_hour_end".$suffix)])
-                    .":".$this->_prefixZero($event[("opentime_day_minute_end".$suffix)]) . "　";
+                if($event[("opentime_day_hour_end".$suffix)] !="" && $event[("opentime_day_minute_end".$suffix)] !=""){
+                    $res.="〜".$this->_prefixZero($event[("opentime_day_hour_end".$suffix)])
+                        .":".$this->_prefixZero($event[("opentime_day_minute_end".$suffix)]) . "　";
+                } else{
+                    $res.= "<br/>";
+                }
+
             }
         }
 
@@ -86,6 +90,8 @@ class Event extends Model
                 if($event[("opentime_day_hour_end".$suffix)] !="" && $event[("opentime_day_minute_end".$suffix)] !=""){
                     $res.="〜".$this->_prefixZero($event[("opentime_day_hour_end".$suffix)])
                         .":".$this->_prefixZero($event[("opentime_day_minute_end".$suffix)]) . "　";
+                }else{
+                    $res.= "<br/>";
                 }
                 if($count >= 2){
                     $res.="<br/>";
