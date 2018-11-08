@@ -76,6 +76,11 @@
                             </div>
                             <div class="row">
                                 <div class="col-xs-12 col-md-6">
+                                    <div class="form-group" >
+                                        <label for="position">{{"住所"}}</label>
+                                        <input type="text" class="form-control" value="{{$event->position}}"
+                                               id="position" name="position" placeholder="住所">
+                                    </div>
                                     <div class="form-group" id="position_master_container">
                                         <label for="position_master">{{"開催場所"}}</label>
                                         <select  class="form-control"
@@ -88,11 +93,8 @@
                                         </select>
                                     </div>
                                     <div class="form-group" id="position_container">
-                                        <input type="text" class="form-control" value="{{$event->position}}"
-                                               id="position" name="position" placeholder="開催場所">
-                                        <!-- for zip automation-->
-                                        <input type="text" class="form-control" style="display: none"
-                                               id="position_none" name="position_none" >
+                                        <input type="text" class="form-control" value="{{$event->position_detail}}"
+                                               id="position_detail" name="position_detail" placeholder="開催場所">
                                     </div>
                                 </div>
                                 <div class="col-xs-12 col-md-6">
@@ -392,7 +394,7 @@
                 // auto zip
                 $('#btn-auto-zip').click(function(e) {
                     e.preventDefault();
-                    AjaxZip3.zip2addr('zip01', 'zip02', 'province_id', 'position_none');
+                    AjaxZip3.zip2addr('zip01', 'zip02', 'province_id', 'position');
                 });
 
             }
@@ -425,7 +427,7 @@
                e.preventDefault();
                return false;
            }
-            if($("#position").val().length < 1){
+            if($("#position_detail").val().length < 1){
                 $("#position_container").addClass("has-error");
                 $('html, body').animate({
                     scrollTop: $("#position_container").offset().top

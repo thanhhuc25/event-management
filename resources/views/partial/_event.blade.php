@@ -18,7 +18,7 @@
 
             <div>
                 @if ($event->position_master!="その他")
-                    <div>{{$event->position_master}}</div>
+                    <div>{{$event->position_master}}　{{$event->position_detail}}</div>
                 @endif
                   {{$event->province ? $event->province->name : ""}}{{$event->position}}
             </div>

@@ -103,6 +103,7 @@ class AdminEventController extends Controller
             $event->province_id = $request->input("province_id");
         }
         $event->position = $request->input("position", "");
+        $event->position_detail = $request->input("position_detail", "");
         $event->position_master = $request->input("position_master", "");
         $event->zip01 = $request->input("zip01", "");
         $event->zip02 = $request->input("zip02", "");
