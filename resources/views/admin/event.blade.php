@@ -76,10 +76,23 @@
                             </div>
                             <div class="row">
                                 <div class="col-xs-12 col-md-6">
-                                    <div class="form-group">
-                                        <label for="position">{{"開催場所"}}</label>
+                                    <div class="form-group" id="position_master_container">
+                                        <label for="position_master">{{"開催場所"}}</label>
+                                        <select  class="form-control"
+                                               id="position_master" name="position_master">
+                                            <option value="" {{$event->position_master=="" ? "selected" : ""}}>開催場所を選んでください</option>
+                                            <option value="店頭" {{$event->position_master=="店頭" ? "selected" : ""}}>店頭</option>
+                                            <option value="倉庫" {{$event->position_master=="倉庫" ? "selected" : ""}}>倉庫</option>
+                                            <option value="事務所" {{$event->position_master=="事務所" ? "selected" : ""}}>事務所</option>
+                                            <option value="その他" {{$event->position_master=="その他" ? "selected" : ""}}>その他(※下記へ入力してください)</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group" id="position_container">
                                         <input type="text" class="form-control" value="{{$event->position}}"
                                                id="position" name="position" placeholder="開催場所">
+                                        <!-- for zip automation-->
+                                        <input type="text" class="form-control" style="display: none"
+                                               id="position_none" name="position_none" >
                                     </div>
                                 </div>
                                 <div class="col-xs-12 col-md-6">
@@ -88,6 +101,11 @@
                                         <label for="phone">{{"連絡先"}}</label>
                                         <input type="text" class="form-control" value="{{$event->phone}}"
                                                id="phone" name="phone" placeholder="連絡先">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="phone2">{{"当日のお問合せ"}}</label>
+                                        <input type="text" class="form-control" value="{{$event->phone2}}"
+                                               id="phone2" name="phone2" placeholder="当日のお問合せ">
                                     </div>
                                 </div>
 
@@ -374,7 +392,7 @@
                 // auto zip
                 $('#btn-auto-zip').click(function(e) {
                     e.preventDefault();
-                    AjaxZip3.zip2addr('zip01', 'zip02', 'province_id', 'position');
+                    AjaxZip3.zip2addr('zip01', 'zip02', 'province_id', 'position_none');
                 });
 
             }
@@ -399,6 +417,22 @@
                e.preventDefault();
                return false;
            }
+           if($("#position_master").val().length < 1){
+               $("#position_master_container").addClass("has-error");
+               $('html, body').animate({
+                   scrollTop: $("#position_master_container").offset().top
+               }, 1000);
+               e.preventDefault();
+               return false;
+           }
+            if($("#position").val().length < 1){
+                $("#position_container").addClass("has-error");
+                $('html, body').animate({
+                    scrollTop: $("#position_container").offset().top
+                }, 1000);
+                e.preventDefault();
+                return false;
+            }
            var isHasDate = false;
            for(var _i = 1; _i <= 5; _i++){
                var selector = "open_date";

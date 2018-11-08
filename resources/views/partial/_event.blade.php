@@ -13,16 +13,26 @@
 
             </div>
         </div>
-        <div class="a-ttl_txt">
-            開催場所：
-            <span>
+        <div class="a-ttl_txt flex-times">
+            <div>開催場所：</div>
+
+            <div>
+                @if ($event->position_master!="その他")
+                    <div>{{$event->position_master}}</div>
+                @endif
                   {{$event->province ? $event->province->name : ""}}{{$event->position}}
-                </span>
+            </div>
         </div>
         <div class="a-ttl_txt">
             連絡先&nbsp;&nbsp;&nbsp;&nbsp;：
             <span>
                   {{$event->phone}}
+                </span>
+        </div>
+        <div class="a-ttl_txt">
+            当日のお問合せ：
+                <span>
+                  {{$event->phone2}}
                 </span>
         </div>
         <div class="a-ttl_txt">
