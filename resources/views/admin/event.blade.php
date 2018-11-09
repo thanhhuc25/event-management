@@ -7,6 +7,23 @@
 @section('header')
     <link href="{{ asset('assets/bootstrap-3/css/bootstrap-datetimepicker.css') }}" rel="stylesheet">
     <script src="//ajaxzip3.github.io/ajaxzip3.js" charset="UTF-8"></script>
+    <style>
+        #position_master_container {
+            padding-left: 30px;
+        }
+        #position_master_container label{
+            display: block;
+        }
+        #position_detail {
+            display: inline-block;
+            width: 300px;
+            display: none;
+        }
+        #position_master_container_error {
+            color: #a94442; padding-left: 0;
+            display: none;
+        }
+    </style>
 @endsection
 
 @section('content')
@@ -507,20 +524,6 @@
         width: 100%;
         left: 0;
     }
-    #position_master_container {
-        padding-left: 30px;
-    }
-    #position_master_container label{
-        display: block;
-    }
-    #position_detail {
-        display: inline-block;
-        width: 300px;
-        display: none;
-    }
-    #position_master_container_error {
-        color: #a94442; padding-left: 0;
-        display: none;
-    }
+
 </style>
 @endsection
