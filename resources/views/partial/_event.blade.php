@@ -17,8 +17,10 @@
             <div>開催場所：</div>
 
             <div>
-                @if ($event->position_master!="その他")
-                    <div>{{$event->position_master}}　{{$event->position_detail}}</div>
+                @if ($event->position_master=="その他")
+                    <div>{{$event->position_detail}}</div>
+                @else
+                    <div>{{$event->position_master}}</div>
                 @endif
                   {{$event->province ? $event->province->name : ""}}{{$event->position}}
             </div>

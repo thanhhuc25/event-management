@@ -77,24 +77,30 @@
                             <div class="row">
                                 <div class="col-xs-12 col-md-6">
                                     <div class="form-group" >
-                                        <label for="position">{{"住所"}}</label>
+                                        <label for="position">{{"開催場所"}}</label>
                                         <input type="text" class="form-control" value="{{$event->position}}"
-                                               id="position" name="position" placeholder="住所">
+                                               id="position" name="position" placeholder="開催場所">
                                     </div>
                                     <div class="form-group" id="position_master_container">
-                                        <label for="position_master">{{"開催場所"}}</label>
-                                        <select  class="form-control"
-                                               id="position_master" name="position_master">
-                                            <option value="" {{$event->position_master=="" ? "selected" : ""}}>開催場所を選んでください</option>
-                                            <option value="店頭" {{$event->position_master=="店頭" ? "selected" : ""}}>店頭</option>
-                                            <option value="倉庫" {{$event->position_master=="倉庫" ? "selected" : ""}}>倉庫</option>
-                                            <option value="事務所" {{$event->position_master=="事務所" ? "selected" : ""}}>事務所</option>
-                                            <option value="その他" {{$event->position_master=="その他" ? "selected" : ""}}>その他(※下記へ入力してください)</option>
-                                        </select>
-                                    </div>
-                                    <div class="form-group" id="position_container">
-                                        <input type="text" class="form-control" value="{{$event->position_detail}}"
-                                               id="position_detail" name="position_detail" placeholder="開催場所">
+                                        <div id="position_master_container_error" style="">選択してください</div>
+                                        <label class="">
+                                            <input type="radio" value="店頭" name="position_master" {{$event->position_master=="店頭" ? "checked" : ""}}>
+                                            店頭
+                                        </label>
+                                        <label class="">
+                                            <input type="radio" value="倉庫" name="position_master" {{$event->position_master=="倉庫" ? "checked" : ""}}>
+                                            倉庫
+                                        </label>
+                                        <label class="">
+                                            <input type="radio" value="事務所" name="position_master" {{$event->position_master=="事務所" ? "checked" : ""}}>
+                                            事務所
+                                        </label>
+                                        <label class="">
+                                            <input type="radio" value="その他" name="position_master" {{$event->position_master=="その他" ? "checked" : ""}}>
+                                            その他
+                                            <input style="font-weight: normal" type="text" class="form-control" value="{{$event->position_detail}}"
+                                                   id="position_detail" name="position_detail" placeholder="">
+                                        </label>
                                     </div>
                                 </div>
                                 <div class="col-xs-12 col-md-6">
@@ -396,6 +402,17 @@
                     e.preventDefault();
                     AjaxZip3.zip2addr('zip01', 'zip02', 'province_id', 'position');
                 });
+                // change radio
+                $("input[name='position_master']").change(function () {
+                   if($(this).val()=="その他"){
+                       $("#position_detail").show();
+                   } else{
+                       $("#position_detail").hide();
+                   }
+                });
+                @if($event->position_master=="その他")
+                    $("#position_detail").show();
+                @endif
 
             }
         });
@@ -419,22 +436,17 @@
                e.preventDefault();
                return false;
            }
-           if($("#position_master").val().length < 1){
-               $("#position_master_container").addClass("has-error");
-               $('html, body').animate({
-                   scrollTop: $("#position_master_container").offset().top
-               }, 1000);
-               e.preventDefault();
-               return false;
-           }
-            if($("#position_detail").val().length < 1){
-                $("#position_container").addClass("has-error");
-                $('html, body').animate({
-                    scrollTop: $("#position_container").offset().top
-                }, 1000);
-                e.preventDefault();
-                return false;
-            }
+//           $("#position_master_container_error").hide();
+//           if($("input[name='position_master']:checked").length < 1){
+//               $("#position_master_container_error").show();
+//               $('html, body').animate({
+//                   scrollTop: $("#position_master_container").offset().top
+//               }, 1000);
+//               e.preventDefault();
+//               return false;
+//           } else{
+//           }
+
            var isHasDate = false;
            for(var _i = 1; _i <= 5; _i++){
                var selector = "open_date";
@@ -494,6 +506,21 @@
         bottom:0;
         width: 100%;
         left: 0;
+    }
+    #position_master_container {
+        padding-left: 30px;
+    }
+    #position_master_container label{
+        display: block;
+    }
+    #position_detail {
+        display: inline-block;
+        width: 300px;
+        display: none;
+    }
+    #position_master_container_error {
+        color: #a94442; padding-left: 0;
+        display: none;
     }
 </style>
 @endsection
