@@ -42,6 +42,13 @@ class DataTableController extends Controller
                 }
                 return "";
             })
+            ->editColumn('position', function ($e) {
+                if($e->position_master=="その他"){
+                    return "<div>".$e->position_detail."</div>". ($e->province ? $e->province->name : "").$e->position;
+                } else {
+                    return "<div>".$e->position_master."</div>". ($e->province ? $e->province->name : "").$e->position;
+                }
+            })
             ->editColumn('open_date', function ($e) {
                 return $e->displayOpenDatesAdmin();
             })
@@ -51,7 +58,7 @@ class DataTableController extends Controller
                 }
                 return "";
             })
-            ->rawColumns(['creator', 'action', 'open_date'])
+            ->rawColumns(['creator', 'action', 'open_date', 'position'])
             ->addIndexColumn()
             ->make(true);
     }

@@ -128,9 +128,9 @@
                                                id="phone" name="phone" placeholder="連絡先">
                                     </div>
                                     <div class="form-group">
-                                        <label for="phone2">{{"当日のお問合せ"}}</label>
+                                        <label for="phone2">{{"当日のお問合せ先"}}</label>
                                         <input type="text" class="form-control" value="{{$event->phone2}}"
-                                               id="phone2" name="phone2" placeholder="当日のお問合せ">
+                                               id="phone2" name="phone2" placeholder="当日のお問合せ先">
                                     </div>
                                 </div>
 

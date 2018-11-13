@@ -32,7 +32,7 @@
                 </span>
         </div>
         <div class="a-ttl_txt">
-            当日のお問合せ：
+            当日のお問合せ先：
                 <span>
                   {{$event->phone2}}
                 </span>
