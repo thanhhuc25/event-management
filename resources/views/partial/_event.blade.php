@@ -13,6 +13,7 @@
 
             </div>
         </div>
+        @if($event->position_master)
         <div class="a-ttl_txt flex-times">
             <div>開催場所：</div>
 
@@ -25,18 +26,23 @@
                   {{$event->province ? $event->province->name : ""}}{{$event->position}}
             </div>
         </div>
+        @endif
+        @if($event->phone)
         <div class="a-ttl_txt">
             連絡先&nbsp;&nbsp;&nbsp;&nbsp;：
             <span>
                   {{$event->phone}}
                 </span>
         </div>
+        @endif
+        @if($event->phone2)
         <div class="a-ttl_txt">
             当日のお問合せ先：
                 <span>
                   {{$event->phone2}}
                 </span>
         </div>
+        @endif
         <div class="a-ttl_txt">
             {!! nl2br( $event->comment) !!}
         </div>

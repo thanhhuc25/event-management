@@ -44,9 +44,13 @@ class DataTableController extends Controller
             })
             ->editColumn('position', function ($e) {
                 if($e->position_master=="その他"){
-                    return "<div>".$e->position_detail."</div>". ($e->province ? $e->province->name : "").$e->position;
+                    return "<div>".$e->position_detail."</div>". ($e->province ? $e->province->name : "").$e->position . "<div>
+                    ".$e->phone2."
+                    </div>";
                 } else {
-                    return "<div>".$e->position_master."</div>". ($e->province ? $e->province->name : "").$e->position;
+                    return "<div>".$e->position_master."</div>". ($e->province ? $e->province->name : "").$e->position . "<div>
+                    ".$e->phone2."
+                    </div>";
                 }
             })
             ->editColumn('open_date', function ($e) {

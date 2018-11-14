@@ -12,7 +12,7 @@
             padding-left: 30px;
         }
         #position_master_container label{
-            display: block;
+            /* display: block; */
         }
         #position_detail {
             display: inline-block;
@@ -100,24 +100,33 @@
                                     </div>
                                     <div class="form-group" id="position_master_container">
                                         <div id="position_master_container_error" style="">選択してください</div>
-                                        <label class="">
-                                            <input type="radio" value="店頭" name="position_master" {{$event->position_master=="店頭" ? "checked" : ""}}>
-                                            店頭
-                                        </label>
-                                        <label class="">
-                                            <input type="radio" value="倉庫" name="position_master" {{$event->position_master=="倉庫" ? "checked" : ""}}>
-                                            倉庫
-                                        </label>
-                                        <label class="">
-                                            <input type="radio" value="事務所" name="position_master" {{$event->position_master=="事務所" ? "checked" : ""}}>
-                                            事務所
-                                        </label>
-                                        <label class="">
-                                            <input type="radio" value="その他" name="position_master" {{$event->position_master=="その他" ? "checked" : ""}}>
-                                            その他
-                                            <input style="font-weight: normal" type="text" class="form-control" value="{{$event->position_detail}}"
-                                                   id="position_detail" name="position_detail" placeholder="">
-                                        </label>
+                                        <div>
+                                          <label class="">
+                                              <input type="radio" value="店頭" name="position_master" {{$event->position_master=="店頭" ? "checked" : ""}}>
+                                              店頭
+                                          </label>
+                                        </div>
+                                        <div>
+                                          <label class="">
+                                              <input type="radio" value="倉庫" name="position_master" {{$event->position_master=="倉庫" ? "checked" : ""}}>
+                                              倉庫
+                                          </label>
+                                        </div>
+
+                                        <div>
+                                          <label class="">
+                                              <input type="radio" value="事務所" name="position_master" {{$event->position_master=="事務所" ? "checked" : ""}}>
+                                              事務所
+                                          </label>
+                                        </div>
+                                        <div>
+                                          <label class="">
+                                              <input type="radio" value="その他" name="position_master" {{$event->position_master=="その他" ? "checked" : ""}}>
+                                              その他
+                                              <input style="font-weight: normal" type="text" class="form-control" value="{{$event->position_detail}}"
+                                                     id="position_detail" name="position_detail" placeholder="">
+                                          </label>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="col-xs-12 col-md-6">
